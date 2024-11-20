@@ -54,6 +54,8 @@ def generate_sql_batch(dataset, tokenizer, model, batch_size=1):
             pad_token_id=eos_token_id,
             batch_size=batch_size,
         )
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
 
         for output in outputs:
             generated_query = (
