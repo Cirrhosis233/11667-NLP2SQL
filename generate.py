@@ -1,8 +1,14 @@
 import torch
 from datasets import load_from_disk
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
-
+import argparse
 from tqdm import tqdm
+
+MODEL = {
+    "sqlcoder": "defog/sqlcoder-7b-2", # batch 18-
+    "codellama": "codellama/CodeLlama-7b-Instruct-hf", # batch 8
+    "deepseek": "deepseek-ai/deepseek-coder-7b-instruct-v1.5", # batch 8
+}
 
 
 def generate_prompt_batch(batch, prompt_file="prompt.md"):
@@ -29,7 +35,7 @@ def get_tokenizer_model(model_name):
     return tokenizer, model
 
 
-def generate_sql_batch(dataset, tokenizer, model, batch_size=1):
+def generate_sql_batch(dataset, tokenizer, model, num_beams=1, batch_size=1):
     eos_token_id = tokenizer.eos_token_id
     tokenizer.pad_token_id = eos_token_id
     pipe = pipeline(
@@ -38,8 +44,8 @@ def generate_sql_batch(dataset, tokenizer, model, batch_size=1):
         tokenizer=tokenizer,
         max_new_tokens=300,
         do_sample=False,
-        return_full_text=False,
-        num_beams=1,
+        return_full_text=False,  # added return_full_text parameter to prevent splitting issues with prompt
+        num_beams=1,  # do beam search with 4 beams for high quality results
     )
     generations = []
 
@@ -54,8 +60,6 @@ def generate_sql_batch(dataset, tokenizer, model, batch_size=1):
             pad_token_id=eos_token_id,
             batch_size=batch_size,
         )
-        torch.cuda.empty_cache()
-        torch.cuda.synchronize()
 
         for output in outputs:
             generated_query = (
@@ -63,14 +67,47 @@ def generate_sql_batch(dataset, tokenizer, model, batch_size=1):
             )
             generations.append(generated_query)
 
+        del outputs
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
+
     return generations
 
 
 if __name__ == "__main__":
-    dataset = load_from_disk("./datasets/sql-create-context-split")
-    test_data = dataset["val"]
-    tokenizer, model = get_tokenizer_model("defog/sqlcoder-7b-2")
+    parser = argparse.ArgumentParser(description="Argument parser for model evaluation")
 
-    generations = generate_sql_batch(test_data, tokenizer, model, batch_size=16)
-    output = test_data.add_column("generation", generations)
-    output.to_json("val_eval_1beam.json")
+    parser.add_argument(
+        "--model",
+        choices=["sqlcoder", "codellama", "deepseek"],
+        required=True,
+        help="Select the model: sqlcoder, CodeLlama (codellama), deepseek-coder (deepseek)",
+    )
+    parser.add_argument(
+        "--data",
+        choices=["train", "val", "test"],
+        required=True,
+        help="Select the data type: train, validation (val), test",
+    )
+    parser.add_argument(
+        "--num_beams", type=int, default=1, help="Number of beams, default is 1"
+    )
+    parser.add_argument(
+        "--batch_size", type=int, default=8, help="Batch size, default is 8"
+    )
+
+    args = parser.parse_args()
+    model_name = MODEL[args.model]
+    data_split = args.data
+    num_beams = args.num_beams
+    batch_size = args.batch_size
+
+    output_path = f"{data_split}_eval_{num_beams}beam_{args.model}.json"
+
+    dataset = load_from_disk("./datasets/sql-create-context-split")
+    data = dataset[data_split]
+    tokenizer, model = get_tokenizer_model(model_name)
+
+    generations = generate_sql_batch(data, tokenizer, model, num_beams=num_beams, batch_size=batch_size)
+    output = data.add_column("generation", generations)
+    output.to_json(output_path)
