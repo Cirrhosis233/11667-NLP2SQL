@@ -1,0 +1,39 @@
+exact match:
+(11667sql) yufeizhao@Yufeis-MacBook-Pro-3 11667-NLP2SQL % python exact_match.py -f '/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/test_eval_1beam_codellama.json'
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/test_eval_1beam_codellama.json
+Total Queries: 250
+Exact Matches: 63
+Accuracy: 25.20%
+(11667sql) yufeizhao@Yufeis-MacBook-Pro-3 11667-NLP2SQL % python exact_match.py -f '/Users/yufeizhao/Desktop/11667MiniProject/11667
+-NLP2SQL/evaluation/test_eval_1beam_deepseek.json'
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/test_eval_1beam_deepseek.json
+Total Queries: 250
+Exact Matches: 53
+Accuracy: 21.20%
+(11667sql) yufeizhao@Yufeis-MacBook-Pro-3 11667-NLP2SQL % python exact_match.py -f '/Users/yufeizhao/Desktop/11667MiniProject/11667
+-NLP2SQL/evaluation/test_eval_1beam_sqlcoder.json'
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/test_eval_1beam_sqlcoder.json
+Total Queries: 250
+Exact Matches: 0
+Accuracy: 0.00%
+(11667sql) yufeizhao@Yufeis-MacBook-Pro-3 11667-NLP2SQL % python exact_match.py -f '/Users/yufeizhao/Desktop/11667MiniProject/11667
+-NLP2SQL/evaluation/test_eval_codellama.json'
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/test_eval_codellama.json
+Total Queries: 250
+Exact Matches: 62
+Accuracy: 24.80%
+(11667sql) yufeizhao@Yufeis-MacBook-Pro-3 11667-NLP2SQL % python exact_match.py -f '/Users/yufeizhao/Desktop/11667MiniProject/11667
+-NLP2SQL/evaluation/test_eval_deepseek.json'
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/test_eval_deepseek.json
+Total Queries: 250
+Exact Matches: 54
+Accuracy: 21.60%
+(11667sql) yufeizhao@Yufeis-MacBook-Pro-3 11667-NLP2SQL % python exact_match.py -f '/Users/yufeizhao/Desktop/11667MiniProject/11667
+-NLP2SQL/evaluation/test_eval_sqlcoder.json'
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/test_eval_sqlcoder.json
+Total Queries: 250
+Exact Matches: 1
+Accuracy: 0.40%
+
+
+
