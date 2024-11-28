@@ -1,126 +1,146 @@
+import sys
+import logging
 import torch
-from datasets import load_dataset
-from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments, Trainer
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    Trainer,
+    TrainingArguments,
+    HfArgumentParser,
+    DataCollatorForLanguageModeling,
+    BitsAndBytesConfig,
+)
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
-import wandb
+from datasets import load_from_disk
+from dataclasses import dataclass, field
+from typing import List, Union
 
-# Initialize Weights & Biases
-wandb.init(project="text2sql-finetuning", name="lora_text2sql")
+# Logging setup
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# Model and LoRa setup
-MODEL_NAME = "codellama/CodeLlama-7b-Instruct-hf"  # Change as needed
-TOKENIZER_NAME = MODEL_NAME
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+if len(sys.argv) == 1:
+    raise ValueError("Missing configuration file.")
 
-# Load dataset
-dataset = {
-    split: load_dataset("json", data_files=f"./datasets/sql-create-context-split/{split}.json")
-    for split in ["train", "val", "test"]
-}
+config_file = sys.argv[1]
 
-# Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_NAME)
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL_NAME,
-    trust_remote_code=True,
-    torch_dtype=torch.float16,  # Use mixed precision
-    device_map="auto"
-)
 
-# Prepare model for training with LoRa
-config = LoraConfig(
-    r=16,
-    lora_alpha=32,
-    lora_dropout=0.05,
-    target_modules=["q_proj", "v_proj"],  # Update based on the model architecture
-    bias="none",
-    task_type="CAUSAL_LM"
-)
-model = prepare_model_for_kbit_training(model)
-model = get_peft_model(model, config)
+@dataclass
+class ModelConfig:
+    model: str = field(default="codellama/CodeLlama-7b-Instruct-hf")
+    dataset: str = field(default="./datasets/sql-create-context-split")
+    prompt: str = field(default="./prompts/prompt_v2.md")
+    seq_len: int = field(default=1024)
+    bits: int = field(default=4)
+    bnb_4bit_quant_type: str = field(default="nf4")
+    r: int = field(default=16)
+    lora_alpha: int = field(default=32)
+    lora_dropout: float = field(default=0.1)
+    target_modules: Union[List[str], str] = field(default_factory=lambda: ["q_proj", "v_proj"])
+    bias: str = field(default="none")
+    init_lora_weights: Union[bool, str] = field(default=True)
+    task_type: str = field(default="CAUSAL_LM")
 
-# Preprocessing
-def preprocess_function(examples):
-    prompts = [
-        f"""### Task
-Generate a SQL query to answer [QUESTION]{q}[/QUESTION]
 
-### Instructions
-The SQL query should end with ";" and must not include any explanation.
+def prepare_dataset_for_training(dataset, tokenizer, seq_len, prompt_file):
+    if not tokenizer.pad_token:
+        tokenizer.pad_token = tokenizer.eos_token
+    with open(prompt_file, "r") as f:
+        prompt = f.read()
+    columns = dataset["train"].features.keys()
 
-### Database Schema
-{m}
+    def preprocess_function(examples):
+        prompts = [
+            prompt.format(user_question=q, table_metadata_string=m)
+            for q, m in zip(examples["question"], examples["context"])
+        ]
 
-### Answer
-Given the database schema, here is the SQL query that answers [QUESTION]{q}[/QUESTION]
-[SQL]"""
-        for q, m in zip(examples["question"], examples["context"])
-    ]
-    labels = [
-        sql + ";" if not sql.endswith(";") else sql
-        for sql in examples["answer"]
-    ]
-    tokenized_inputs = tokenizer(prompts, text_target=labels, truncation=True, max_length=512)
-    return tokenized_inputs
+        answers = [a if a.endswith(";") else a + ";" for a in examples["answer"]]
 
-tokenized_datasets = {
-    split: dataset[split].map(preprocess_function, batched=True)
-    for split in ["train", "val"]
-}
+        model_inputs = tokenizer(
+            prompts,
+            truncation=True,
+            max_length=seq_len,
+            padding="max_length",
+            add_special_tokens=True,
+        )
+        labels = tokenizer(
+            answers,
+            truncation=True,
+            max_length=seq_len,
+            padding="max_length",
+            add_special_tokens=True,
+        )
+        labels["input_ids"] = [
+            [-100 if token == tokenizer.pad_token_id else token for token in label]
+            for label in labels["input_ids"]
+        ]
 
-# Training arguments
-training_args = TrainingArguments(
-    output_dir="./results",
-    evaluation_strategy="steps",
-    logging_strategy="steps",
-    logging_steps=50,
-    save_strategy="steps",
-    save_steps=500,
-    per_device_train_batch_size=8,
-    per_device_eval_batch_size=8,
-    gradient_accumulation_steps=4,
-    learning_rate=2e-4,
-    weight_decay=0.01,
-    max_steps=2000,
-    save_total_limit=2,
-    fp16=True,
-    push_to_hub=False,
-    report_to="wandb"
-)
+        model_inputs["labels"] = labels["input_ids"]
+        return model_inputs
 
-# Metrics
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = torch.argmax(logits, dim=-1)
-    labels = labels[:, 1:].contiguous()  # Shift labels
-    predictions = predictions[:, :-1]  # Shift predictions
-    decoded_preds = tokenizer.batch_decode(predictions, skip_special_tokens=True)
-    decoded_labels = tokenizer.batch_decode(labels, skip_special_tokens=True)
-    exact_matches = sum(p == l for p, l in zip(decoded_preds, decoded_labels)) / len(decoded_labels)
-    return {"exact_match": exact_matches}
+    tokenized_dataset = dataset.map(
+        preprocess_function,
+        batched=True,
+        remove_columns=columns,
+    )
+    return tokenized_dataset
 
-# Trainer setup
-trainer = Trainer(
-    model=model,
-    args=training_args,
-    train_dataset=tokenized_datasets["train"],
-    eval_dataset=tokenized_datasets["val"],
-    tokenizer=tokenizer,
-    compute_metrics=compute_metrics
-)
 
-# Train
-trainer.train()
+if __name__ == "__main__":
+    parser = HfArgumentParser((ModelConfig, TrainingArguments))
+    model_config, training_args = parser.parse_json_file(json_file=config_file)
+    torch_dtype = (
+        torch.float16
+        if training_args.fp16
+        else (torch.bfloat16 if training_args.bf16 else torch.float32)
+    )
 
-# Evaluate
-results = trainer.evaluate()
+    tokenizer = AutoTokenizer.from_pretrained(model_config.model)
 
-# Log results
-wandb.log(results)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_config.model,
+        device_map="auto",
+        quantization_config=BitsAndBytesConfig(
+            load_in_8bit=model_config.bits == 8,
+            load_in_4bit=model_config.bits == 4,
+            bnb_4bit_compute_dtype=torch_dtype,
+            bnb_4bit_quant_type=model_config.bnb_4bit_quant_type,
+        ),
+        torch_dtype=torch_dtype,
+        trust_remote_code=True,
+    )
+    model = prepare_model_for_kbit_training(
+        model, use_gradient_checkpointing=training_args.gradient_checkpointing
+    )
+    lora_config = LoraConfig(
+        r=model_config.r,
+        lora_alpha=model_config.lora_alpha,
+        target_modules=model_config.target_modules,
+        lora_dropout=model_config.lora_dropout,
+        bias=model_config.bias,
+        init_lora_weights=model_config.init_lora_weights,
+        task_type=model_config.task_type,
+    )
+    model = get_peft_model(model, lora_config)
+    model.print_trainable_parameters()
 
-# Save the model and tokenizer
-model.save_pretrained("./finetuned_model")
-tokenizer.save_pretrained("./finetuned_model")
+    dataset = load_from_disk(model_config.dataset)
+    dataset = prepare_dataset_for_training(
+        dataset,
+        tokenizer,
+        seq_len=model_config.seq_len,
+        prompt_file=model_config.prompt,
+    )
 
-# Finish Weights & Biases logging
-wandb.finish()
+    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=dataset["train"],
+        eval_dataset=dataset["val"],
+        data_collator=data_collator,
+    )
+
+    trainer.train()
+    trainer.save_model(training_args.output_dir)
