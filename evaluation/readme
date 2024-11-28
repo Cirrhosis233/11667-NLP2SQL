@@ -1,0 +1,587 @@
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 evaluation % export DBPASSWORD="postgres"                                         
+export DBUSER="postgres"
+export DBHOST="localhost"
+export DBPORT=5432
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 evaluation % echo $DBPASSWORD $DBUSER $DBHOST $DBPORT
+postgres postgres localhost 5432
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 evaluation % cd defog-data 
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 defog-data % ./setup.sh
+Databases to init: academic advising atis broker car_dealership derm_treatment ewallet geography restaurants scholar yelp
+dropping and recreating database academic
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database academic
+importing defog_data/academic/academic.sql into database academic
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 5
+INSERT 0 9
+INSERT 0 3
+INSERT 0 5
+INSERT 0 8
+INSERT 0 3
+INSERT 0 3
+INSERT 0 2
+INSERT 0 6
+INSERT 0 4
+INSERT 0 4
+INSERT 0 5
+INSERT 0 5
+INSERT 0 2
+INSERT 0 6
+dropping and recreating database advising
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database advising
+importing defog_data/advising/advising.sql into database advising
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 2
+INSERT 0 4
+INSERT 0 8
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+INSERT 0 14
+INSERT 0 3
+INSERT 0 4
+INSERT 0 3
+INSERT 0 4
+INSERT 0 5
+INSERT 0 12
+dropping and recreating database atis
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database atis
+importing defog_data/atis/atis.sql into database atis
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 16
+INSERT 0 10
+INSERT 0 3
+INSERT 0 10
+INSERT 0 3
+INSERT 0 7
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 5
+INSERT 0 6
+INSERT 0 10
+INSERT 0 12
+INSERT 0 10
+INSERT 0 9
+INSERT 0 10
+INSERT 0 4
+dropping and recreating database broker
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database broker
+importing defog_data/broker/broker.sql into database broker
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 20
+INSERT 0 21
+INSERT 0 52
+INSERT 0 56
+dropping and recreating database car_dealership
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database car_dealership
+importing defog_data/car_dealership/car_dealership.sql into database car_dealership
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 21
+INSERT 0 13
+INSERT 0 13
+INSERT 0 22
+INSERT 0 23
+INSERT 0 23
+INSERT 0 17
+dropping and recreating database derm_treatment
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database derm_treatment
+importing defog_data/derm_treatment/derm_treatment.sql into database derm_treatment
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 10
+INSERT 0 11
+INSERT 0 10
+INSERT 0 10
+INSERT 0 26
+INSERT 0 21
+INSERT 0 8
+INSERT 0 15
+dropping and recreating database ewallet
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database ewallet
+importing defog_data/ewallet/ewallet.sql into database ewallet
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 11
+INSERT 0 15
+INSERT 0 10
+INSERT 0 26
+INSERT 0 22
+INSERT 0 20
+INSERT 0 16
+INSERT 0 23
+INSERT 0 12
+dropping and recreating database geography
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database geography
+importing defog_data/geography/geography.sql into database geography
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 12
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 10
+INSERT 0 12
+dropping and recreating database restaurants
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database restaurants
+importing defog_data/restaurants/restaurants.sql into database restaurants
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 5
+INSERT 0 11
+INSERT 0 11
+dropping and recreating database scholar
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database scholar
+importing defog_data/scholar/scholar.sql into database scholar
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 10
+INSERT 0 9
+INSERT 0 4
+INSERT 0 4
+INSERT 0 4
+INSERT 0 5
+INSERT 0 5
+INSERT 0 6
+INSERT 0 5
+INSERT 0 7
+INSERT 0 3
+INSERT 0 16
+dropping and recreating database yelp
+DROP DATABASE
+CREATE DATABASE
+done dropping and recreating database yelp
+importing defog_data/yelp/yelp.sql into database yelp
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 7
+INSERT 0 7
+INSERT 0 12
+INSERT 0 7
+INSERT 0 23
+INSERT 0 21
+INSERT 0 5
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 defog-data % cd ..
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 evaluation % ls
+baseline        defog-data      readme          sql_eval.py
+
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 evaluation % python sql_eval2.py
+Processing 0th question: Which authors have written publications in both the domain "Machine Learning" and the domain "Data Science"? on database: academic
+
+Generated Query Results (Normalized):
+   aid            name
+0    2  Ashish Vaswani
+
+Gold Query Results (Normalized):
+   aid            name
+0    2  Ashish Vaswani
+0: Exact Match: True, Subset Match: True
+
+Processing 1th question: What is the total number of citations received by each author? on database: academic
+
+Generated Query Results (Normalized):
+   author_id     author_name  total_citations
+0          1   Larry Summers                6
+1          2  Ashish Vaswani                3
+
+Gold Query Results (Normalized):
+   author_id     author_name  total_citations
+0          1   Larry Summers                6
+1          2  Ashish Vaswani                3
+1: Exact Match: True, Subset Match: True
+
+Processing 2th question: What is the total number of publications published in each year? on database: academic
+
+Generated Query Results (Normalized):
+   total_publications  year
+0                   2  2020
+1                   3  2021
+
+Gold Query Results (Normalized):
+   total_publications  year
+0                   2  2020
+1                   3  2021
+2: Exact Match: True, Subset Match: True
+
+Processing 3th question: What is the average number of references cited by publications in each domain name? on database: academic
+
+Generated Query Results (Normalized):
+   average_references       domain_name
+0                 0.0         Sociology
+1                 1.0  Natural Sciences
+2                 2.0      Data Science
+3                 3.0  Computer Science
+4                 4.0  Machine Learning
+
+Gold Query Results (Normalized):
+   average_references       domain_name
+0                 0.0         Sociology
+1                 1.0  Natural Sciences
+2                 2.0      Data Science
+3                 3.0  Computer Science
+4                 4.0  Machine Learning
+3: Exact Match: True, Subset Match: True
+
+Processing 4th question: What is the average number of citations received by publications in each year? on database: academic
+
+Generated Query Results (Normalized):
+   average_citations  publication_year
+0                1.0              2021
+1                3.0              2020
+
+Gold Query Results (Normalized):
+   average_citations  publication_year
+0                1.0              2021
+1                3.0              2020
+4: Exact Match: True, Subset Match: True
+
+Processing 5th question: What is the title of the publication that has received the highest number of citations? on database: academic
+
+Generated Query Results (Normalized):
+                                          title
+0  The Effects of Climate Change on Agriculture
+
+Gold Query Results (Normalized):
+                                          title
+0  The Effects of Climate Change on Agriculture
+5: Exact Match: True, Subset Match: True
+
+Processing 6th question: What are the top 5 domains with the highest number of authors associated with them? on database: academic
+
+Generated Query Results (Normalized):
+               name  num_authors
+0  Computer Science            3
+1  Machine Learning            2
+2         Sociology            1
+3  Natural Sciences            1
+4      Data Science            1
+
+Gold Query Results (Normalized):
+               name  num_authors
+0         Sociology            1
+1  Natural Sciences            1
+2  Machine Learning            2
+3      Data Science            1
+4  Computer Science            3
+
+Gold Query Results (Normalized):
+               name  num_authors
+0         Sociology            1
+1  Natural Sciences            1
+2  Machine Learning            2
+3      Data Science            1
+4  Computer Science            3
+
+Gold Query Results (Normalized):
+               name  num_authors
+0         Sociology            1
+1  Natural Sciences            1
+2  Machine Learning            2
+3      Data Science            1
+4  Computer Science            3
+6: Exact Match: False, Subset Match: True
+
+Processing 7th question: What are the top 3 titles of the publications that have the highest number of references cited, ordered by the number of references cited in descending order? on database: academic
+
+Generated Query Results (Normalized):
+   reference_num                      title
+0              4  Attention is all you need
+1              2  Optimizing GPU Throughput
+2              2     Data Mining Techniques
+
+Gold Query Results (Normalized):
+   reference_num                      title
+0              4  Attention is all you need
+1              2  Optimizing GPU Throughput
+2              2     Data Mining Techniques
+7: Exact Match: True, Subset Match: True
+
+Processing 8th question: What are the top 3 publications with the highest number of citations? on database: academic
+
+Generated Query Results (Normalized):
+   citation_num                                              title
+0             4       The Effects of Climate Change on Agriculture
+1             2                             Data Mining Techniques
+2             2  A Study on the Effects of Social Media on Ment...
+
+Gold Query Results (Normalized):
+   citation_num                                              title
+0             4       The Effects of Climate Change on Agriculture
+1             2                             Data Mining Techniques
+2             2  A Study on the Effects of Social Media on Ment...
+8: Exact Match: True, Subset Match: True
+
+Processing 9th question: What are the titles of all publications ordered alphabetically? on database: academic
+
+Generated Query Results (Normalized):
+                                               title
+0  A Study on the Effects of Social Media on Ment...
+1                          Attention is all you need
+2                             Data Mining Techniques
+3                          Optimizing GPU Throughput
+4       The Effects of Climate Change on Agriculture
+
+Gold Query Results (Normalized):
+                                               title
+0  A Study on the Effects of Social Media on Ment...
+1                          Attention is all you need
+2                             Data Mining Techniques
+3                          Optimizing GPU Throughput
+4       The Effects of Climate Change on Agriculture
+9: Exact Match: True, Subset Match: True
+
+Processing 10th question: What is the ratio of publications to authors in the database? on database: academic
+
+Generated Query Results (Normalized):
+   publication_to_author_ratio
+0                          1.0
+
+Gold Query Results (Normalized):
+   publication_to_author_ratio
+0                          1.0
+10: Exact Match: True, Subset Match: True
+
+Processing 11th question: What is the ratio of publications presented in conferences to publications published in journals? on database: academic
+
+Generated Query Results (Normalized):
+   conference_to_journal_publication_ratio
+0                                      1.0
+
+Gold Query Results (Normalized):
+   conference_to_journal_publication_ratio
+0                                      1.0
+11: Exact Match: True, Subset Match: True
+
+Processing 12th question: What is the ratio of the total number of publications to the total number of keywords within each domain ID? Show all domain IDs. on database: academic
+Error executing query: SELECT d.did, (COUNT(DISTINCT dp.pid)::NUMERIC / COUNT(DISTINCT dk.kid)::NUMERIC) AS publication_to_keyword_ratio FROM public.domain d LEFT JOIN public.domain_publication dp ON d.did = dp.did LEFT JOIN public.domain_keyword dk ON d.did = dk.did GROUP BY d.did;
+Error: (psycopg2.errors.DivisionByZero) division by zero
+
+[SQL: SELECT d.did, (COUNT(DISTINCT dp.pid)::NUMERIC / COUNT(DISTINCT dk.kid)::NUMERIC) AS publication_to_keyword_ratio FROM public.domain d LEFT JOIN public.domain_publication dp ON d.did = dp.did LEFT JOIN public.domain_keyword dk ON d.did = dk.did GROUP BY d.did;]
+(Background on this error at: https://sqlalche.me/e/20/9h9h)
+Generated query returned no results.
+12: Exact Match: False, Subset Match: False
+
+Processing 13th question: How does the ratio of publications to journals change over the years? Return the annual numbers of publications and journals as well. on database: academic
+
+Generated Query Results (Normalized):
+   num_journals  num_publications  publication_to_journal_ratio  year
+0             2                 2                           1.0  2020
+1             2                 3                           1.5  2021
+
+Gold Query Results (Normalized):
+   num_journals  num_publications  publication_to_journal_ratio  year
+0             2                 2                           1.0  2020
+1             2                 3                           1.5  2021
+13: Exact Match: True, Subset Match: True
+
+Processing 14th question: How does the ratio of authors to organizations differ by continent? on database: academic
+
+Generated Query Results (Normalized):
+   author_to_organization_ratio      continent  num_authors  num_organizations
+0                           1.0         Europe            1                  1
+1                           1.5  North America            3                  2
+
+Gold Query Results (Normalized):
+   author_to_organization_ratio      continent  num_authors  num_organizations
+0                           1.0         Europe            1                  1
+1                           1.5  North America            3                  2
+14: Exact Match: True, Subset Match: True
+
+Processing 15th question: Which author had the most publications in the year 2021 and how many publications did he/she have that year? on database: academic
+
+Generated Query Results (Normalized):
+             name  num_publications
+0  Ashish Vaswani                 3
+
+Gold Query Results (Normalized):
+             name  num_publications
+0  Ashish Vaswani                 3
+15: Exact Match: True, Subset Match: True
+
+Processing 16th question: What is the total number of publications presented in each conference? on database: academic
+
+Generated Query Results (Normalized):
+  conference_name  total_publications
+0            AAAS                   1
+1            ICML                   3
+2             ISA                   1
+
+Gold Query Results (Normalized):
+  conference_name  total_publications
+0            AAAS                   1
+1            ICML                   3
+2             ISA                   1
+16: Exact Match: True, Subset Match: True
+
+Processing 17th question: What is the total number of publications in each journal, ordered by the number of publications in descending order? on database: academic
+
+Generated Query Results (Normalized):
+                                  journal_name  total_publications
+0                                       Nature                   3
+1         Journal of Machine Learning Research                   1
+2  Journal of Artificial Intelligence Research                   1
+
+Gold Query Results (Normalized):
+                                  journal_name  total_publications
+0                                       Nature                   3
+1         Journal of Machine Learning Research                   1
+2  Journal of Artificial Intelligence Research                   1
+17: Exact Match: True, Subset Match: True
+
+Processing 18th question: How many publications were presented at each conference, ordered by the number of publications in descending order? Give the names of the conferences and their corresponding number of publications. on database: academic
+
+Generated Query Results (Normalized):
+  conference_name  total_publications
+0            ICML                   3
+1             ISA                   1
+2            AAAS                   1
+
+Gold Query Results (Normalized):
+  conference_name  total_publications
+0             ISA                   1
+1            ICML                   3
+2            AAAS                   1
+18: Exact Match: False, Subset Match: True
+
+Processing 19th question: How many publications were published in journals whose names start with the letter "J"? on database: academic
+
+Generated Query Results (Normalized):
+   total_publications
+0                   2
+
+Gold Query Results (Normalized):
+   total_publications
+0                   2
+19: Exact Match: True, Subset Match: True
+
+Processed 20 rows.
+Matched 19 rows.
+Accuracy: 95.000%
