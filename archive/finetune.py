@@ -1,25 +1,21 @@
-import os
 import sys
 import logging
-from typing import List, Union
 import torch
-from dataclasses import dataclass, field
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
+    Trainer,
     TrainingArguments,
     HfArgumentParser,
+    DataCollatorForLanguageModeling,
     BitsAndBytesConfig,
 )
-from trl import SFTTrainer, DataCollatorForCompletionOnlyLM
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
-from datasets import load_from_disk, disable_caching
+from datasets import load_from_disk
+from dataclasses import dataclass, field
+from typing import List, Union
 
-disable_caching()
-
-#! Wandb Project Name
-os.environ["WANDB_PROJECT"] = "Text2SQL"
-
+# Logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -33,43 +29,62 @@ config_file = sys.argv[1]
 class ModelConfig:
     model: str = field(default="codellama/CodeLlama-7b-Instruct-hf")
     dataset: str = field(default="./datasets/sql-create-context-split")
-    prompt: str = field(default="./prompts/prompt_v2_train.md")
-    max_seq_length: int = field(default=1024)
+    prompt: str = field(default="./prompts/prompt_v2.md")
+    seq_len: int = field(default=1024)
     bits: int = field(default=4)
     bnb_4bit_quant_type: str = field(default="nf4")
     r: int = field(default=16)
     lora_alpha: int = field(default=32)
     lora_dropout: float = field(default=0.1)
-    target_modules: List[str] = field(default_factory=lambda: ["q_proj", "v_proj"])
+    target_modules: Union[List[str], str] = field(default_factory=lambda: ["q_proj", "v_proj"])
     bias: str = field(default="none")
     init_lora_weights: Union[bool, str] = field(default=True)
     task_type: str = field(default="CAUSAL_LM")
 
 
-def prepare_dataset_for_training(dataset, tokenizer, prompt_file):
+def prepare_dataset_for_training(dataset, tokenizer, seq_len, prompt_file):
+    if not tokenizer.pad_token:
+        tokenizer.pad_token = tokenizer.eos_token
     with open(prompt_file, "r") as f:
         prompt = f.read()
     columns = dataset["train"].features.keys()
 
-    def preprocess_function(sample):
-        sample["text"] = prompt.format(
-            user_question=sample["question"],
-            table_metadata_string=sample["context"],
-            sql=(
-                sample["answer"]
-                if sample["answer"].endswith(";")
-                else sample["answer"] + ";"
-            ),
-            eos_token=tokenizer.eos_token,
-        ).strip()
+    def preprocess_function(examples):
+        prompts = [
+            prompt.format(user_question=q, table_metadata_string=m)
+            for q, m in zip(examples["question"], examples["context"])
+        ]
 
-        return sample
+        answers = [a if a.endswith(";") else a + ";" for a in examples["answer"]]
 
-    train_dataset = dataset.map(
+        model_inputs = tokenizer(
+            prompts,
+            truncation=True,
+            max_length=seq_len,
+            padding="max_length",
+            add_special_tokens=True,
+        )
+        labels = tokenizer(
+            answers,
+            truncation=True,
+            max_length=seq_len,
+            padding="max_length",
+            add_special_tokens=True,
+        )
+        labels["input_ids"] = [
+            [-100 if token == tokenizer.pad_token_id else token for token in label]
+            for label in labels["input_ids"]
+        ]
+
+        model_inputs["labels"] = labels["input_ids"]
+        return model_inputs
+
+    tokenized_dataset = dataset.map(
         preprocess_function,
+        batched=True,
         remove_columns=columns,
     )
-    return train_dataset
+    return tokenized_dataset
 
 
 if __name__ == "__main__":
@@ -82,10 +97,6 @@ if __name__ == "__main__":
     )
 
     tokenizer = AutoTokenizer.from_pretrained(model_config.model)
-    if not tokenizer.pad_token:
-        # tokenizer.add_special_tokens({"pad_token": "<|pad|>"})
-        tokenizer.pad_token = tokenizer.eos_token
-    print(tokenizer.special_tokens_map)
 
     model = AutoModelForCausalLM.from_pretrained(
         model_config.model,
@@ -98,9 +109,7 @@ if __name__ == "__main__":
         ),
         torch_dtype=torch_dtype,
         trust_remote_code=True,
-        attn_implementation="flash_attention_2",
     )
-    # model.resize_token_embeddings(len(tokenizer))
     model = prepare_model_for_kbit_training(
         model, use_gradient_checkpointing=training_args.gradient_checkpointing
     )
@@ -112,7 +121,6 @@ if __name__ == "__main__":
         bias=model_config.bias,
         init_lora_weights=model_config.init_lora_weights,
         task_type=model_config.task_type,
-        # modules_to_save=["lm_head", "embed_tokens"],
     )
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
@@ -120,25 +128,18 @@ if __name__ == "__main__":
     dataset = load_from_disk(model_config.dataset)
     dataset = prepare_dataset_for_training(
         dataset,
-        tokenizer=tokenizer,
+        tokenizer,
+        seq_len=model_config.seq_len,
         prompt_file=model_config.prompt,
     )
 
-    response_template = "\n[SQL]"
-    #! BUG: https://github.com/huggingface/trl/issues/598
-    response_template_ids = tokenizer.encode(
-        response_template, add_special_tokens=False
-    )[1:]
-    data_collator = DataCollatorForCompletionOnlyLM(
-        response_template_ids, tokenizer=tokenizer, mlm=False
-    )
-    trainer = SFTTrainer(
+    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
+    trainer = Trainer(
         model=model,
         args=training_args,
         train_dataset=dataset["train"],
         eval_dataset=dataset["val"],
         data_collator=data_collator,
-        max_seq_length=model_config.max_seq_length,
     )
 
     trainer.train()
