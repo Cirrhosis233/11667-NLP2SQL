@@ -1,0 +1,100 @@
+codellama_v0/eval_codellama_inference.json
+Processed 250 rows.
+Matched 163 rows.
+Accuracy: 65.200%
+
+codellama_v1/eval_codellama_inference.json
+Processed 250 rows.
+Matched 116 rows.
+Accuracy: 46.400%
+
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/eval_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/eval_codellama_inference.json
+Total Queries: 250
+Total Distance: 2689
+Average Token-Level Edit Distance: 10.76
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/val_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/val_codellama_inference.json
+Total Queries: 250
+Total Distance: 2747
+Average Token-Level Edit Distance: 10.99
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/test_codellama_inference.json
+Total Queries: 250
+Total Distance: 3664
+Average Token-Level Edit Distance: 14.66
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/train_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/train_codellama_inference.json
+Total Queries: 1500
+Total Distance: 16919
+Average Token-Level Edit Distance: 11.28
+
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/eval_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/eval_codellama_inference.json
+Total Queries: 250
+Total Distance: 3629
+Average Token-Level Edit Distance: 14.52
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/val_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/val_codellama_inference.json
+Total Queries: 250
+Total Distance: 792
+Average Token-Level Edit Distance: 3.17
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/test_codellama_inference.json
+Total Queries: 250
+Total Distance: 782
+Average Token-Level Edit Distance: 3.13
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/train_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/train_codellama_inference.json
+Total Queries: 1500
+Total Distance: 3922
+Average Token-Level Edit Distance: 2.61
+
+
+
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/eval_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/eval_codellama_inference.json
+Total Queries: 250
+Exact Matches: 7
+Accuracy: 2.80%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/train_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/train_codellama_inference.json
+Total Queries: 1500
+Exact Matches: 358
+Accuracy: 23.87%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/val_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/val_codellama_inference.json
+Total Queries: 250
+Exact Matches: 59
+Accuracy: 23.60%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v0/test_codellama_inference.json
+Total Queries: 250
+Exact Matches: 62
+Accuracy: 24.80%
+
+
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/eval_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/eval_codellama_inference.json
+Total Queries: 250
+Exact Matches: 0
+Accuracy: 0.00%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/train_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/train_codellama_inference.json
+Total Queries: 1500
+Exact Matches: 903
+Accuracy: 60.20%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/val_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/val_codellama_inference.json
+Total Queries: 250
+Exact Matches: 128
+Accuracy: 51.20%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/test_codellama_inference.json
+Total Queries: 250
+Exact Matches: 143
+Accuracy: 57.20%

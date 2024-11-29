@@ -1,3 +1,4 @@
+(base) yufeizhao@Yufeis-MacBook-Pro-3 evaluation % conda activate sql-eval
 (sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 evaluation % export DBPASSWORD="postgres"                                         
 export DBUSER="postgres"
 export DBHOST="localhost"

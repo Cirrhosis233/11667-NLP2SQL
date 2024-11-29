@@ -35,9 +35,10 @@ def normalize_table(
     """
     Normalizes a dataframe by:
     1. Removing duplicate rows.
-    2. Sorting columns in alphabetical order.
-    3. Sorting rows based on ordering criteria (e.g., ORDER BY or inferred intent from the question).
-    4. Resetting the index.
+    2. Ensuring unique column names.
+    3. Sorting columns in alphabetical order.
+    4. Sorting rows based on ordering criteria (e.g., ORDER BY or inferred intent from the question).
+    5. Resetting the index.
 
     Args:
         df (pd.DataFrame): Input DataFrame to normalize.
@@ -50,6 +51,9 @@ def normalize_table(
     """
     # Remove duplicate rows
     df = df.drop_duplicates()
+
+    # Ensure unique column names
+    df = deduplicate_columns(df)
 
     # Sort columns in alphabetical order
     sorted_df = df.reindex(sorted(df.columns), axis=1)
@@ -93,11 +97,7 @@ def normalize_table(
     # Reset the index
     sorted_df = sorted_df.reset_index(drop=True)
 
-    # Ensure column names are unique
-    sorted_df = deduplicate_columns(sorted_df)
-
     return sorted_df
-
 
 def get_all_minimal_queries(query: str) -> List[str]:
     """
@@ -264,7 +264,9 @@ if __name__ == "__main__":
         "password": "postgres"
     }
 
-    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_20.json"
+    # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_20.json"
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_1.json"
+    
+    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/eval_codellama_inference_comma.json"
 
     process_json_file(json_file_path, db_creds)
