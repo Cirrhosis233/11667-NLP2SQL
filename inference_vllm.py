@@ -88,7 +88,6 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--data",
-        choices=["train", "val", "test", "eval"],
         required=True,
         help="Select the data type: train, validation (val), test, eval",
     )
@@ -115,6 +114,7 @@ if __name__ == "__main__":
     data_split = args.data
     prompt_file = args.prompt
     lora_path = args.lora
+    os.makedirs(args.output, exist_ok=True)
     output_path = os.path.join(args.output, f"{data_split}_{args.model}_inference.json")
 
     dataset = load_from_disk("./datasets/sql-create-context-split")
