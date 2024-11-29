@@ -181,8 +181,8 @@ def compare_query_results(gold_query: str, generated_query: str, db_name: str, d
 
     # Normalize the generated result
     generated_result = normalize_table(generated_result, query_category=query_category, question=question, sql=generated_query)
-    # print("\nGenerated Query Results (Normalized):")
-    # print(generated_result)
+    print("\nGenerated Query Results (Normalized):")
+    print(generated_result)
     
     exact_match = False
     subset_match = False
@@ -193,8 +193,8 @@ def compare_query_results(gold_query: str, generated_query: str, db_name: str, d
             continue
 
         gold_result = normalize_table(generated_result, query_category=query_category, question=question, sql=query)
-        # print("\nGold Query Results (Normalized):")
-        # print(gold_result)
+        print("\nGold Query Results (Normalized):")
+        print(gold_result)
 
         # Align columns for comparison
         common_columns = list(set(gold_result.columns) & set(generated_result.columns))
@@ -240,10 +240,11 @@ def process_json_file(json_file: str, db_creds: Dict):
         if not generated_query:
             print("No generated query available.")
             continue
-
+        
+        print(f"Generation: {generated_query}\n")
         exact_match, subset_match = compare_query_results(gold_query, generated_query, db_name, db_creds, category, question)
 
-        print(f"{i}: Exact Match: {exact_match}, Subset Match: {subset_match}\n")
+        print(f"{i}: Exact Match: {exact_match}, Subset Match: {subset_match}\n\n")
         i += 1
         total_count += 1
         if exact_match or subset_match:
@@ -267,6 +268,6 @@ if __name__ == "__main__":
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_20.json"
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_1.json"
     
-    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v2/codellama_v1/eval_codellama_inference_comma.json"
+    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v5/eval_train_codellama_inference_comma.json"
 
     process_json_file(json_file_path, db_creds)

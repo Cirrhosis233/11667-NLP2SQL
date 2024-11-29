@@ -98,3 +98,59 @@ File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/p
 Total Queries: 250
 Exact Matches: 143
 Accuracy: 57.20%
+
+
+
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/train_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/train_codellama_inference.json
+Total Queries: 1650
+Exact Matches: 402
+Accuracy: 24.36%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/val_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/val_codellama_inference.json
+Total Queries: 250
+Exact Matches: 64
+Accuracy: 25.60%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/test_codellama_inference.json
+Total Queries: 250
+Exact Matches: 68
+Accuracy: 27.20%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/eval_test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/eval_test_codellama_inference.json
+Total Queries: 100
+Exact Matches: 3
+Accuracy: 3.00%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/eval_train_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v0/eval_train_codellama_inference.json
+Total Queries: 150
+Exact Matches: 5
+Accuracy: 3.33%
+
+
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/train_codellama_inference.json" 
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/train_codellama_inference.json
+Total Queries: 1650
+Exact Matches: 1099
+Accuracy: 66.61%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/test_codellama_inference.json
+Total Queries: 250
+Exact Matches: 146
+Accuracy: 58.40%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/val_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/val_codellama_inference.json
+Total Queries: 250
+Exact Matches: 138
+Accuracy: 55.20%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/eval_test_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/eval_test_codellama_inference.json
+Total Queries: 100
+Exact Matches: 5
+Accuracy: 5.00%
+(sql-eval) yufeizhao@Yufeis-MacBook-Pro-3 baseline % python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/eval_train_codellama_inference.json"
+File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/eval_train_codellama_inference.json
+Total Queries: 150
+Exact Matches: 23
+Accuracy: 15.33%

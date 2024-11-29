@@ -22,11 +22,37 @@ def tokenize_sql(sql):
 def token_level_edit_distance(sql1, sql2):
     """
     Calculate token-level edit distance between two SQL statements.
+    It measures the differences based on logical units (tokens) like keywords, table names, column names, operators, and so on.
+    Edit distance is a measure of how many changes (insertions, deletions, or substitutions) are needed to transform one sequence into another. In this context:
+	•	Insertions: Adding a missing token in the generated SQL.
+	•	Deletions: Removing an extra token in the generated SQL.
+	•	Substitutions: Replacing one token with another to make the SQL statements match.
+    Examples:
+    - Deletion:
+	•	Gold SQL: SELECT name, age FROM students
+	•	Generated SQL: SELECT name FROM students
+	•	Edit Distance: 1 (One missing token: age)
+	- Substitution:
+	•	Gold SQL: SELECT name FROM students
+	•	Generated SQL: SELECT name FROM teachers
+	•	Edit Distance: 1 (One token difference: students vs. teachers)
+    - Complex Difference:
+	•	Gold SQL: SELECT name, age FROM students WHERE age > 18
+	•	Generated SQL: SELECT name FROM students WHERE age < 18
+	•	Edit Distance: 3
+	•	Token changes: age removed, > replaced with <, and age added after SELECT.
     """
     # Convert the sql string to a list of tokens
     tokens1 = tokenize_sql(sql1)
     tokens2 = tokenize_sql(sql2)
     matcher = SequenceMatcher(None, tokens1, tokens2)
+    """
+    Example: 
+    seq1 = ["SELECT", "name", ",", "age", "FROM", "students", "WHERE", "age", ">", "18"]
+    seq2 = ["SELECT", "name", "FROM", "students", "WHERE", "age", "<", "18"]
+    matcher.get_matching_blocks(): 
+    [Match(a=0, b=0, size=2), Match(a=4, b=2, size=3), Match(a=8, b=6, size=1), Match(a=10, b=8, size=0)]
+    """
     # Calculate edit distance based on unmatched tokens
     total_tokens = len(tokens1) + len(tokens2)
     unmatched = total_tokens - 2 * sum(block.size for block in matcher.get_matching_blocks())

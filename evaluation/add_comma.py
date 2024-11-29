@@ -1,5 +1,5 @@
-input_file = "inference_output/prompt_v2/codellama_v1/eval_codellama_inference.json"  # Replace with your file name
-output_file = "inference_output/prompt_v2/codellama_v1/eval_codellama_inference_comma.json"  # Replace with desired output file name
+input_file = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/eval_train_codellama_inference.json"  # Replace with your file name
+output_file = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v4/eval_train_codellama_inference_comma.json"  # Replace with desired output file name
 
 def fix_json(input_file: str, output_file: str):
     """
