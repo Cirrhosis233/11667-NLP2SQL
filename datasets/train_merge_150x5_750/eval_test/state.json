@@ -4,14 +4,10 @@
       "filename": "data-00000-of-00001.arrow"
     }
   ],
-  "_fingerprint": "43f2320bd7c9bafc",
-  "_format_columns": [
-    "answer",
-    "context",
-    "question"
-  ],
+  "_fingerprint": "453906232fbb8425",
+  "_format_columns": null,
   "_format_kwargs": {},
   "_format_type": null,
   "_output_all_columns": false,
-  "_split": null
+  "_split": "eval"
 }

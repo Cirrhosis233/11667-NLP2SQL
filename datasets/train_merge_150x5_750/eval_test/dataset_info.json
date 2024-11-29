@@ -1,0 +1,54 @@
+{
+  "builder_name": "json",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "json",
+  "dataset_size": 523958,
+  "description": "",
+  "download_checksums": {
+    "/home/zack/CMU/11667/11667-NLP2SQL/./datasets/sql_eval_dataset.json": {
+      "num_bytes": 555754,
+      "checksum": null
+    }
+  },
+  "download_size": 555754,
+  "features": {
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "answer": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "db_name": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "context": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "query_category": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 1079712,
+  "splits": {
+    "eval": {
+      "name": "eval",
+      "num_bytes": 523958,
+      "num_examples": 250,
+      "dataset_name": "json"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

@@ -11,7 +11,7 @@ MODEL = {
     "deepseek": "deepseek-ai/deepseek-coder-7b-instruct-v1.5",
 }
 
-model_max_tokens = 4096
+model_max_tokens = 2048
 generation_token_budget = 512  # Tokens to reserve for generation
 prompt_budget = model_max_tokens - generation_token_budget
 
