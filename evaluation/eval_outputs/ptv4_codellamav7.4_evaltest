@@ -1,0 +1,1692 @@
+Processing 0th question: What is the ratio of restaurants with rating > 4.5 to the total number of restaurants in the database. on database: restaurants
+Generation: SELECT CAST(COUNT(CASE WHEN rating > 4.5 THEN 1 END) AS FLOAT) / NULLIF(COUNT(*), 0) AS ratio FROM restaurant
+
+
+Generated Query Results (Normalized):
+      ratio
+0  0.272727
+
+Gold Query Results (Normalized):
+      ratio
+0  0.272727
+0: Exact Match: True, Subset Match: True
+
+
+Processing 1th question: Which students have declared a minor program? List their firstname and lastname. Order the results by the students' last names. on database: advising
+Generation: SELECT student.firstname, student.lastname FROM student WHERE student.minor IS NOT NULL ORDER BY student.lastname
+
+
+Generated Query Results (Normalized):
+  firstname lastname
+0     Sarah    Brown
+1     David  Johnson
+
+Gold Query Results (Normalized):
+  firstname lastname
+0     Sarah    Brown
+1     David  Johnson
+1: Exact Match: True, Subset Match: True
+
+
+Processing 2th question: Return the student IDs who have taken an in-person course and have gotten a grade of A or C. on database: advising
+Generation: SELECT student_record.student_id FROM student_record JOIN course_offering ON student_record.course_id = course_offering.course_id WHERE course_offering.semester = student_record.semester AND (student_record.grade = 'A' OR student_record.grade = 'C') AND course_offering.monday ILIKE '%in-person%' OR course_offering.tuesday ILIKE '%in-person%' OR course_offering.wednesday ILIKE '%in-person%' OR course_offering.thursday ILIKE '%in-person%' OR course_offering.friday ILIKE '%in-person%' OR course_offering.saturday ILIKE '%in-person%' OR course_offering.sunday ILIKE '%in-person%'
+
+Generated query returned no results.
+2: Exact Match: False, Subset Match: False
+
+
+Processing 3th question: Which courses have a final project and a final exam? on database: advising
+Generation: SELECT DISTINCT {course.name, course.course_id, course.number} AS course_name FROM course JOIN course_offering ON course.course_id = course_offering.course_id WHERE course_offering.has_final_project = true AND course_offering.has_final_exam = true
+
+Error executing query: SELECT DISTINCT {course.name, course.course_id, course.number} AS course_name FROM course JOIN course_offering ON course.course_id = course_offering.course_id WHERE course_offering.has_final_project = true AND course_offering.has_final_exam = true
+Error: (psycopg2.errors.SyntaxError) syntax error at or near "{"
+LINE 1: SELECT DISTINCT {course.name, course.course_id, course.numbe...
+                        ^
+
+[SQL: SELECT DISTINCT {course.name, course.course_id, course.number} AS course_name FROM course JOIN course_offering ON course.course_id = course_offering.course_id WHERE course_offering.has_final_project = true AND course_offering.has_final_exam = true]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+3: Exact Match: False, Subset Match: False
+
+
+Processing 4th question: Return the distinct list of user IDs who have received transaction notifications. on database: ewallet
+Generation: SELECT DISTINCT u.uid FROM consumer_div.users u JOIN consumer_div.notifications n ON u.uid = n.user_id WHERE n.type = 'transaction'
+
+
+Generated Query Results (Normalized):
+   uid
+0    1
+1    2
+2    3
+3    4
+4   10
+
+Gold Query Results (Normalized):
+   uid
+0    1
+1    2
+2    3
+3    4
+4   10
+4: Exact Match: True, Subset Match: True
+
+
+Processing 5th question: What is the total number of papers published per year? on database: scholar
+Generation: SELECT paper.year, COUNT(paper.paperid) AS total_papers FROM paper GROUP BY paper.year ORDER BY paper.year
+
+
+Generated Query Results (Normalized):
+   total_papers  year
+0             2  2019
+1             3  2020
+
+Gold Query Results (Normalized):
+   total_papers  year
+0             2  2019
+1             3  2020
+5: Exact Match: True, Subset Match: True
+
+
+Processing 6th question: What is the latitude and longitude of the business with the highest rating? on database: yelp
+Generation: SELECT business.latitude, business.longitude FROM business ORDER BY business.review_count DESC NULLS LAST LIMIT 1
+
+
+Generated Query Results (Normalized):
+    latitude    longitude
+0  34.052235  -118.243683
+
+Gold Query Results (Normalized):
+    latitude    longitude
+0  34.052235  -118.243683
+6: Exact Match: True, Subset Match: True
+
+
+Processing 7th question: What is the average number of references cited by publications in each domain name? on database: academic
+Generation: SELECT domain_publication.did, AVG(publication.reference_num) AS average_reference_num FROM domain_publication JOIN publication ON domain_publication.pid = publication.pid GROUP BY domain_publication.did
+
+
+Generated Query Results (Normalized):
+   average_reference_num  did
+0                    0.0    4
+1                    1.0    2
+2                    2.0    1
+3                    3.0    3
+4                    4.0    5
+
+Gold Query Results (Normalized):
+   average_reference_num  did
+0                    0.0    4
+1                    1.0    2
+2                    2.0    1
+3                    3.0    3
+4                    4.0    5
+7: Exact Match: True, Subset Match: True
+
+
+Processing 8th question: Which merchants earliest coupon start date was within a year of the merchant's registration? Return the merchant id, registration date, and earliest coupon id and start date on database: ewallet
+Generation: SELECT m.mid, m.created_at AS registration_date, c.cid, c.start_date FROM consumer_div.merchants m JOIN consumer_div.coupons c ON m.mid = c.merchant_id WHERE c.start_date >= m.created_at AND c.start_date < m.created_at + INTERVAL '1 year' ORDER BY m.mid, c.start_date LIMIT 1
+
+
+Generated Query Results (Normalized):
+   cid  mid registration_date  start_date
+0    5    5        2022-06-20  2023-04-01
+
+Gold Query Results (Normalized):
+   cid  mid registration_date  start_date
+0    5    5        2022-06-20  2023-04-01
+8: Exact Match: True, Subset Match: True
+
+
+Processing 9th question: Return the top 5 salespersons by number of sales in the past 30 days? Return their first and last name, total sales count and total revenue amount. on database: car_dealership
+Generation: SELECT c.first_name, c.last_name, COUNT(s.id) AS sale_count, SUM(s.sale_price) AS total_revenue FROM sales s JOIN salespersons c ON s.salesperson_id = c.id WHERE s.sale_date >= CURRENT_DATE - INTERVAL '30 days' GROUP BY c.first_name, c.last_name ORDER BY sale_count DESC, total_revenue DESC LIMIT 5
+
+
+Generated Query Results (Normalized):
+  first_name last_name  sale_count  total_revenue
+0      Emily     Brown           1        29500.0
+1       Jane     Smith           3       140000.0
+2       John       Doe           1        26000.0
+3    Michael   Johnson           2        69700.0
+4      Sarah    Taylor           1        43500.0
+
+Gold Query Results (Normalized):
+  first_name last_name  sale_count  total_revenue
+0      Emily     Brown           1        29500.0
+1       Jane     Smith           3       140000.0
+2       John       Doe           1        26000.0
+3    Michael   Johnson           2        69700.0
+4      Sarah    Taylor           1        43500.0
+9: Exact Match: True, Subset Match: True
+
+
+Processing 10th question: Which airlines do not have any flights that either depart from/arrive at JFK, or have one or more stops? on database: atis
+Generation: SELECT airline.airline_name FROM airline LEFT JOIN flight ON airline.airline_code = flight.airline_code WHERE flight.from_airport = 'JFK' OR flight.to_airport = 'JFK' OR flight.stops > 0 GROUP BY airline.airline_name HAVING COUNT(flight.flight_id) = 0
+
+Generated query returned no results.
+10: Exact Match: False, Subset Match: False
+
+
+Processing 11th question: How many check-ins occurred on each day of the week? on database: yelp
+Generation: SELECT checkin.day, COUNT(*) AS checkin_count FROM checkin GROUP BY checkin.day ORDER BY checkin_count DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+   checkin_count        day
+0              2     Friday
+1              2     Monday
+2              2   Saturday
+3              2   Thursday
+4              2    Tuesday
+5              2  Wednesday
+
+Gold Query Results (Normalized):
+   checkin_count        day
+0              2     Friday
+1              2     Monday
+2              2   Saturday
+3              2   Thursday
+4              2    Tuesday
+5              2  Wednesday
+11: Exact Match: True, Subset Match: True
+
+
+Processing 12th question: How many distinct customers made each type of transaction between Jan 1, 2023 and Mar 31, 2023 (inclusive of start and end dates)? Return the transaction type, number of distinct customers and average number of shares, for the top 3 transaction types by number of customers. on database: broker_context
+Generation: SELECT sbTxType, COUNT(DISTINCT sbTxCustId) AS num_distinct_customers, AVG(sbTxShares) AS avg_shares FROM sbTransaction WHERE sbTxDateTime >= '2023-01-01' AND sbTxDateTime <= '2023-03-31' GROUP BY sbTxType ORDER BY num_distinct_customers DESC LIMIT 3
+
+Error executing query: SELECT sbTxType, COUNT(DISTINCT sbTxCustId) AS num_distinct_customers, AVG(sbTxShares) AS avg_shares FROM sbTransaction WHERE sbTxDateTime >= '2023-01-01' AND sbTxDateTime <= '2023-03-31' GROUP BY sbTxType ORDER BY num_distinct_customers DESC LIMIT 3
+Error: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "broker_context" does not exist
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Generated query returned no results.
+12: Exact Match: False, Subset Match: False
+
+
+Processing 13th question: Which city has the highest-rated restaurant? on database: restaurants
+Generation: SELECT restaurant.city_name FROM restaurant ORDER BY rating DESC NULLS LAST LIMIT 1
+
+
+Generated Query Results (Normalized):
+  city_name
+0  New York
+
+Gold Query Results (Normalized):
+  city_name
+0  New York
+13: Exact Match: True, Subset Match: True
+
+
+Processing 14th question: Calculate the ratio of the maximum range to the maximum payload for each aircraft on database: atis
+Generation: SELECT aircraft.aircraft_code, aircraft.wing_span, aircraft.length, aircraft.pay_load, (CAST(aircraft.wing_span AS FLOAT) / NULLIF(aircraft.length, 0)) AS range_payload_ratio, (CAST(aircraft.pay_load AS FLOAT) / NULLIF(aircraft.wing_span, 0)) AS payload_range_ratio FROM aircraft ORDER BY range_payload_ratio DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+  aircraft_code  length  ...  range_payload_ratio  wing_span
+0          A320     123  ...             0.902439        111
+1          A330     193  ...             1.020725        197
+2          A350     242  ...             0.876033        212
+3          A380     238  ...             1.096639        261
+4          B737     128  ...             0.914062        117
+5          B747     231  ...             0.969697        224
+6          B777     242  ...             0.822314        199
+7          B787     186  ...             1.059140        197
+8        CRJ200      88  ...             0.863636         76
+9          E190     118  ...             0.796610         94
+
+[10 rows x 6 columns]
+
+Gold Query Results (Normalized):
+  aircraft_code  length  ...  range_payload_ratio  wing_span
+0          A320     123  ...             0.902439        111
+1          A330     193  ...             1.020725        197
+2          A350     242  ...             0.876033        212
+3          A380     238  ...             1.096639        261
+4          B737     128  ...             0.914062        117
+5          B747     231  ...             0.969697        224
+6          B777     242  ...             0.822314        199
+7          B787     186  ...             1.059140        197
+8        CRJ200      88  ...             0.863636         76
+9          E190     118  ...             0.796610         94
+
+[10 rows x 6 columns]
+14: Exact Match: True, Subset Match: True
+
+
+Processing 15th question: Return the distinct list of doctor IDs, first names and last names that have prescribed treatments. on database: derm_treatment
+Generation: SELECT DISTINCT d.doc_id, d.first_name, d.last_name FROM doctors d JOIN treatments t ON d.doc_id = t.doc_id
+
+
+Generated Query Results (Normalized):
+   doc_id first_name last_name
+0       1       John       Doe
+1       2       Jane     Smith
+2       3      David   Johnson
+3       4      Emily     Brown
+4       5    Michael     Davis
+5       6      Sarah    Wilson
+6       7     Robert    Taylor
+
+Gold Query Results (Normalized):
+   doc_id first_name last_name
+0       1       John       Doe
+1       2       Jane     Smith
+2       3      David   Johnson
+3       4      Emily     Brown
+4       5    Michael     Davis
+5       6      Sarah    Wilson
+6       7     Robert    Taylor
+15: Exact Match: True, Subset Match: True
+
+
+Processing 16th question: What is the average rating of restaurants in each region? on database: restaurants
+Generation: SELECT geographic.region, AVG(restaurant.rating) AS average_rating FROM geographic JOIN restaurant ON geographic.city_name = restaurant.city_name GROUP BY geographic.region
+
+
+Generated Query Results (Normalized):
+   average_rating      region
+0            4.15  California
+1            4.30    New York
+2            4.50     Florida
+
+Gold Query Results (Normalized):
+   average_rating      region
+0            4.15  California
+1            4.30    New York
+2            4.50     Florida
+16: Exact Match: True, Subset Match: True
+
+
+Processing 17th question: Which are the top 5 countries by total transaction amount sent by users, sender_type = 0? Return the country, number of distinct users who sent, and total transaction amount. on database: ewallet
+Generation: SELECT wallet_transactions_daily.country, COUNT(DISTINCT wallet_transactions_daily.sender_id) AS num_distinct_senders, SUM(wallet_transactions_daily.amount) AS total_transaction_amount FROM wallet_transactions_daily WHERE wallet_transactions_daily.sender_type = 0 GROUP BY wallet_transactions_daily.country ORDER BY total_transaction_amount DESC LIMIT 5
+
+Error executing query: SELECT wallet_transactions_daily.country, COUNT(DISTINCT wallet_transactions_daily.sender_id) AS num_distinct_senders, SUM(wallet_transactions_daily.amount) AS total_transaction_amount FROM wallet_transactions_daily WHERE wallet_transactions_daily.sender_type = 0 GROUP BY wallet_transactions_daily.country ORDER BY total_transaction_amount DESC LIMIT 5
+Error: (psycopg2.errors.UndefinedTable) relation "wallet_transactions_daily" does not exist
+LINE 1: ...ns_daily.amount) AS total_transaction_amount FROM wallet_tra...
+                                                             ^
+
+[SQL: SELECT wallet_transactions_daily.country, COUNT(DISTINCT wallet_transactions_daily.sender_id) AS num_distinct_senders, SUM(wallet_transactions_daily.amount) AS total_transaction_amount FROM wallet_transactions_daily WHERE wallet_transactions_daily.sender_type = 0 GROUP BY wallet_transactions_daily.country ORDER BY total_transaction_amount DESC LIMIT 5]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+17: Exact Match: False, Subset Match: False
+
+
+Processing 18th question: What is the average rating of businesses in the city of San Francisco? on database: yelp
+Generation: SELECT AVG(review.rating) AS average_rating FROM review JOIN business ON review.business_id = business.business_id WHERE business.city ILIKE '%San Francisco%'
+
+
+Generated Query Results (Normalized):
+   average_rating
+0        4.088889
+
+Gold Query Results (Normalized):
+   average_rating
+0        4.088889
+18: Exact Match: True, Subset Match: True
+
+
+Processing 19th question: Return the distinct list of salesperson IDs that have received a cash payment, based on joining the salespersons, sales and payments_received tables. on database: car_dealership
+Generation: SELECT DISTINCT s.id AS salesperson_id FROM salespersons s JOIN sales sa ON s.id = sa.salesperson_id JOIN payments_received pr ON sa.id = pr.sale_id WHERE pr.payment_method = 'Cash'
+
+Generated query returned no results.
+19: Exact Match: False, Subset Match: False
+
+
+Processing 20th question: What's the name and food type of all the restaurants located on Market St in San Francisco? on database: restaurants
+Generation: SELECT name, food_type FROM restaurant WHERE city_name ILIKE '%San Francisco%' INTERSECT SELECT name, food_type FROM restaurant WHERE street_name ILIKE '%Market St%'
+
+Error executing query: SELECT name, food_type FROM restaurant WHERE city_name ILIKE '%San Francisco%' INTERSECT SELECT name, food_type FROM restaurant WHERE street_name ILIKE '%Market St%'
+Error: (psycopg2.errors.UndefinedColumn) column "street_name" does not exist
+LINE 1: ...SECT SELECT name, food_type FROM restaurant WHERE street_nam...
+                                                             ^
+
+[SQL: SELECT name, food_type FROM restaurant WHERE city_name ILIKE '%%San Francisco%%' INTERSECT SELECT name, food_type FROM restaurant WHERE street_name ILIKE '%%Market St%%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+20: Exact Match: False, Subset Match: False
+
+
+Processing 21th question: How many reviews were posted in each month of the year 2021, ordered by the month? on database: yelp
+Generation: SELECT MONTH, COUNT(*) AS review_count FROM review WHERE year = 2021 GROUP BY MONTH ORDER BY MONTH
+
+
+Generated Query Results (Normalized):
+      month  review_count
+0     April             2
+1  February             1
+2   January             2
+3      July             1
+4      June             1
+5     March             1
+6       May             1
+
+Gold Query Results (Normalized):
+      month  review_count
+0     April             2
+1  February             1
+2   January             2
+3      July             1
+4      June             1
+5     March             1
+6       May             1
+21: Exact Match: True, Subset Match: True
+
+
+Processing 22th question: What is the total number of credits earned by each student, ordered from highest to lowest? Give the student id and the total number of credits. on database: advising
+Generation: SELECT student.student_id, student.total_credit FROM student ORDER BY student.total_credit DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+   student_id  total_credit
+0           1            13
+1           5             7
+2           4             7
+3           3             7
+4           2             7
+
+Gold Query Results (Normalized):
+   student_id  total_credit
+0           1            13
+1           5             7
+2           4             7
+3           3             7
+4           2             7
+22: Exact Match: True, Subset Match: True
+
+
+Processing 23th question: What are the top 5 cities with the highest population? Give both city names and the population. on database: geography
+Generation: SELECT city.city_name, city.population FROM city ORDER BY city.population DESC NULLS LAST LIMIT 5
+
+
+Generated Query Results (Normalized):
+     city_name  population
+0  Los Angeles     5000000
+1    Sao Paulo     3000000
+2      Houston     2000000
+3      Chicago     1500000
+4       Mumbai     1200000
+
+Gold Query Results (Normalized):
+     city_name  population
+0  Los Angeles     5000000
+1    Sao Paulo     3000000
+2      Houston     2000000
+3      Chicago     1500000
+4       Mumbai     1200000
+23: Exact Match: True, Subset Match: True
+
+
+Processing 24th question: Give me today's median merchant wallet balance for all active merchants whose category contains 'retail' on database: ewallet
+Generation: SELECT percentile_disc(0.5) WITHIN GROUP (ORDER BY m.balance) AS median_balance FROM consumer_div.merchants m JOIN consumer_div.wallet_merchant_balance_daily wmb ON m.mid = wmb.merchant_id WHERE m.status = 'active' AND m.category ILIKE '%retail%' AND wmb.updated_at = CURRENT_DATE
+
+Error executing query: SELECT percentile_disc(0.5) WITHIN GROUP (ORDER BY m.balance) AS median_balance FROM consumer_div.merchants m JOIN consumer_div.wallet_merchant_balance_daily wmb ON m.mid = wmb.merchant_id WHERE m.status = 'active' AND m.category ILIKE '%retail%' AND wmb.updated_at = CURRENT_DATE
+Error: (psycopg2.errors.UndefinedColumn) column m.balance does not exist
+LINE 1: ...ELECT percentile_disc(0.5) WITHIN GROUP (ORDER BY m.balance)...
+                                                             ^
+HINT:  Perhaps you meant to reference the column "wmb.balance".
+
+[SQL: SELECT percentile_disc(0.5) WITHIN GROUP (ORDER BY m.balance) AS median_balance FROM consumer_div.merchants m JOIN consumer_div.wallet_merchant_balance_daily wmb ON m.mid = wmb.merchant_id WHERE m.status = 'active' AND m.category ILIKE '%%retail%%' AND wmb.updated_at = CURRENT_DATE]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+24: Exact Match: False, Subset Match: False
+
+
+Processing 25th question: What is the ratio of the length of the Mississippi River to the length of the Rhine River? on database: geography
+Generation: SELECT (CAST(m.length AS FLOAT) / NULLIF(r.length, 0)) AS length_ratio FROM river m JOIN river r ON m.traverse = r.traverse WHERE m.river_name = 'Mississippi' AND r.river_name = 'Rhine'
+
+Generated query returned no results.
+25: Exact Match: False, Subset Match: False
+
+
+Processing 26th question: What is the average length of rivers per country in countries with a lake? on database: geography
+Generation: SELECT lake.country_name, AVG(river.length) AS average_length FROM lake JOIN river ON lake.country_name = river.country_name GROUP BY lake.country_name
+
+
+Generated Query Results (Normalized):
+   average_length   country_name
+0           200.0  United States
+1           300.0          China
+2           800.0         Russia
+
+Gold Query Results (Normalized):
+   average_length   country_name
+0           200.0  United States
+1           300.0          China
+2           800.0         Russia
+26: Exact Match: True, Subset Match: True
+
+
+Processing 27th question: Return the car ID, make, model and year for cars that have no sales records, by doing a left join from the cars to sales table. on database: car_dealership
+Generation: SELECT c.id, c.make, c.model, c.year FROM cars c LEFT JOIN sales s ON c.id = s.car_id WHERE s.car_id IS NULL
+
+
+Generated Query Results (Normalized):
+    id           make        model  year
+0   11          Mazda         CX-5  2022
+1   12        Hyundai       Tucson  2023
+2   13            Kia      Sorento  2021
+3   14           Jeep     Wrangler  2022
+4   15            GMC  Sierra 1500  2023
+5   16            Ram         1500  2022
+6   17  Mercedes-Benz      E-Class  2021
+7   18     Volkswagen       Tiguan  2022
+8   19          Volvo         XC90  2023
+9   20        Porsche          911  2022
+10  21       Cadillac     Escalade  2023
+
+Gold Query Results (Normalized):
+    id           make        model  year
+0   11          Mazda         CX-5  2022
+1   12        Hyundai       Tucson  2023
+2   13            Kia      Sorento  2021
+3   14           Jeep     Wrangler  2022
+4   15            GMC  Sierra 1500  2023
+5   16            Ram         1500  2022
+6   17  Mercedes-Benz      E-Class  2021
+7   18     Volkswagen       Tiguan  2022
+8   19          Volvo         XC90  2023
+9   20        Porsche          911  2022
+10  21       Cadillac     Escalade  2023
+27: Exact Match: True, Subset Match: True
+
+
+Processing 28th question: What are the names of the top 3 restaurants with the highest ratings? on database: restaurants
+Generation: SELECT name FROM restaurant ORDER BY rating DESC NULLS LAST LIMIT 3
+
+
+Generated Query Results (Normalized):
+                name
+0     The Vegan Cafe
+1  The Seafood Shack
+2    The Pizza Place
+
+Gold Query Results (Normalized):
+                name
+0     The Vegan Cafe
+1  The Seafood Shack
+2    The Pizza Place
+28: Exact Match: True, Subset Match: True
+
+
+Processing 29th question: What is the ratio of restaurants with a rating above 4.0 to restaurants with a rating below 4.0 overall? on database: restaurants
+Generation: SELECT CAST(COUNT(CASE WHEN rating > 4.0 THEN 1 END) AS FLOAT) / NULLIF(COUNT(CASE WHEN rating < 4.0 THEN 1 END), 0) AS ratio FROM restaurant
+
+
+Generated Query Results (Normalized):
+      ratio
+0  2.666667
+
+Gold Query Results (Normalized):
+      ratio
+0  2.666667
+29: Exact Match: True, Subset Match: True
+
+
+Processing 30th question: How many lakes are there in each state? on database: geography
+Generation: SELECT lake.state_name, COUNT(lake.lake_name) AS number_of_lakes FROM lake GROUP BY lake.state_name ORDER BY number_of_lakes DESC
+
+
+Generated Query Results (Normalized):
+   number_of_lakes state_name
+0                1   New York
+1                1       Ohio
+2                3   Michigan
+3                5       None
+
+Gold Query Results (Normalized):
+   number_of_lakes state_name
+0                1   New York
+1                1       Ohio
+2                3   Michigan
+3                5       None
+30: Exact Match: True, Subset Match: True
+
+
+Processing 31th question: What is the ratio of businesses in the state of California to businesses in the state of New York? on database: yelp
+Generation: SELECT CAST(SUM(CASE WHEN business.state = 'CA' THEN 1 ELSE 0 END) AS FLOAT) / NULLIF(SUM(CASE WHEN business.state = 'NY' THEN 1 ELSE 0 END), 0) AS ratio FROM business
+
+
+Generated Query Results (Normalized):
+      ratio
+0  1.333333
+
+Gold Query Results (Normalized):
+      ratio
+0  1.333333
+31: Exact Match: True, Subset Match: True
+
+
+Processing 32th question: What are the names of the restaurants that serve Italian food? on database: restaurants
+Generation: SELECT name FROM restaurant WHERE food_type ILIKE '%Italian%'
+
+
+Generated Query Results (Normalized):
+              name
+0  The Pasta House
+1  The Pizza Place
+
+Gold Query Results (Normalized):
+              name
+0  The Pasta House
+1  The Pizza Place
+32: Exact Match: True, Subset Match: True
+
+
+Processing 33th question: Who are the top 2 merchants (receiver type 1) by total transaction amount in the past 150 days (inclusive of 150 days ago)? Return the merchant name, total number of transactions, and total transaction amount. on database: ewallet
+Generation: SELECT m.name, COUNT(*) AS num_transactions, SUM(t.amount) AS total_amount FROM consumer_div.merchants m JOIN consumer_div.wallet_transactions_daily t ON m.mid = t.receiver_id AND t.receiver_type = 1 AND t.created_at >= CURRENT_DATE - INTERVAL '150' DAY GROUP BY m.name ORDER BY total_amount DESC LIMIT 2
+
+
+Generated Query Results (Normalized):
+         name  num_transactions  total_amount
+0  HandyCraft                 1        199.99
+1    TechMart                 2        399.98
+
+Gold Query Results (Normalized):
+         name  num_transactions  total_amount
+0  HandyCraft                 1        199.99
+1    TechMart                 2        399.98
+33: Exact Match: True, Subset Match: True
+
+
+Processing 34th question: Return the customer ID and name of customers who have not made any transactions. on database: broker_context
+Generation: SELECT c.sbCustId, c.sbCustName FROM sbCustomer c LEFT JOIN sbTransaction t ON c.sbCustId = t.sbTxCustId WHERE t.sbTxId IS NULL
+
+Error executing query: SELECT c.sbCustId, c.sbCustName FROM sbCustomer c LEFT JOIN sbTransaction t ON c.sbCustId = t.sbTxCustId WHERE t.sbTxId IS NULL
+Error: (psycopg2.OperationalError) connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "broker_context" does not exist
+
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+Generated query returned no results.
+34: Exact Match: False, Subset Match: False
+
+
+Processing 35th question: What are the top 3 most common transaction statuses and their respective counts? on database: ewallet
+Generation: SELECT status, COUNT(*) AS COUNT FROM consumer_div.wallet_transactions_daily GROUP BY status ORDER BY COUNT DESC LIMIT 3
+
+
+Generated Query Results (Normalized):
+   count   status
+0      2   failed
+1      4  pending
+2     19  success
+
+Gold Query Results (Normalized):
+   count   status
+0      2   failed
+1      4  pending
+2     19  success
+35: Exact Match: True, Subset Match: True
+
+
+Processing 36th question: What is the total number of reviews posted in the year 2021 for businesses in the category "Cafe"? on database: yelp
+Generation: SELECT SUM(review.count) AS total_reviews FROM review JOIN business ON review.business_id = business.business_id JOIN category ON business.business_id = category.business_id WHERE category.category_name ILIKE '%Cafe%' AND review.year = 2021
+
+Error executing query: SELECT SUM(review.count) AS total_reviews FROM review JOIN business ON review.business_id = business.business_id JOIN category ON business.business_id = category.business_id WHERE category.category_name ILIKE '%Cafe%' AND review.year = 2021
+Error: (psycopg2.errors.GroupingError) aggregate function calls cannot be nested
+LINE 1: SELECT SUM(review.count) AS total_reviews FROM review JOIN b...
+                   ^
+
+[SQL: SELECT SUM(review.count) AS total_reviews FROM review JOIN business ON review.business_id = business.business_id JOIN category ON business.business_id = category.business_id WHERE category.category_name ILIKE '%%Cafe%%' AND review.year = 2021]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+36: Exact Match: False, Subset Match: False
+
+
+Processing 37th question: How many distinct active users sent money per month in 2023? Return the number of active users per month (as a date), starting from the earliest date. Do not include merchants in the query. Only include successful transactions. on database: ewallet
+Generation: SELECT COUNT(DISTINCT u.uid) AS num_active_users, to_char(wtd.created_at, 'YYYY-MM') AS month FROM consumer_div.wallet_transactions_daily wtd JOIN consumer_div.users u ON wtd.sender_id = u.uid WHERE u.status = 'active' AND wtd.status = 'success' AND wtd.type = 'send' AND wtd.created_at BETWEEN '2023-01-01' AND '2023-12-31' GROUP BY MONTH ORDER BY MONTH
+
+Generated query returned no results.
+37: Exact Match: False, Subset Match: False
+
+
+Processing 38th question: What is the average GPA of students in the program mathematics? on database: advising
+Generation: SELECT AVG(student.total_gpa) AS average_gpa FROM student JOIN program ON student.program_id = program.program_id WHERE program.name ILIKE '%mathematics%'
+
+
+Generated Query Results (Normalized):
+   average_gpa
+0          3.6
+
+Gold Query Results (Normalized):
+   average_gpa
+0          3.6
+38: Exact Match: True, Subset Match: True
+
+
+Processing 39th question: How many authors wrote papers that were published in the journal "Science" in the year 2020? on database: scholar
+Generation: SELECT COUNT(DISTINCT author.authorname) FROM author JOIN writes ON author.authorid = writes.authorid JOIN paper ON writes.paperid = paper.paperid JOIN journal ON paper.journalid = journal.journalid WHERE paper.year = 2020 AND journal.journalname ILIKE '%Science%'
+
+
+Generated Query Results (Normalized):
+   count
+0      4
+
+Gold Query Results (Normalized):
+   count
+0      4
+39: Exact Match: True, Subset Match: True
+
+
+Processing 40th question: How does the ratio of positive reviews (rating > 3) to negative reviews (rating < 3) vary across different categories of businesses, ordered by descending ratio? on database: yelp
+Generation: SELECT {category.category_name, category.id}, CAST(SUM(CASE WHEN review.rating > 3 THEN 1 ELSE 0 END) AS FLOAT) / NULLIF(SUM(CASE WHEN review.rating < 3 THEN 1 ELSE 0 END), 0) AS ratio FROM review JOIN business ON review.business_id = business.business_id JOIN category ON business.business_id = category.business_id GROUP BY {} ORDER BY ratio DESC NULLS LAST
+
+Error executing query: SELECT {category.category_name, category.id}, CAST(SUM(CASE WHEN review.rating > 3 THEN 1 ELSE 0 END) AS FLOAT) / NULLIF(SUM(CASE WHEN review.rating < 3 THEN 1 ELSE 0 END), 0) AS ratio FROM review JOIN business ON review.business_id = business.business_id JOIN category ON business.business_id = category.business_id GROUP BY {} ORDER BY ratio DESC NULLS LAST
+Error: (psycopg2.errors.SyntaxError) syntax error at or near "{"
+LINE 1: SELECT {category.category_name, category.id}, CAST(SUM(CASE ...
+               ^
+
+[SQL: SELECT {category.category_name, category.id}, CAST(SUM(CASE WHEN review.rating > 3 THEN 1 ELSE 0 END) AS FLOAT) / NULLIF(SUM(CASE WHEN review.rating < 3 THEN 1 ELSE 0 END), 0) AS ratio FROM review JOIN business ON review.business_id = business.business_id JOIN category ON business.business_id = category.business_id GROUP BY {} ORDER BY ratio DESC NULLS LAST]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+40: Exact Match: False, Subset Match: False
+
+
+Processing 41th question: Which flights serve meals in first class? Give me the flight id and meal description. on database: atis
+Generation: SELECT flight.flight_id, food_service.meal_description FROM flight JOIN food_service ON flight.meal_code = food_service.meal_code WHERE food_service.compartment = 'FIRST'
+
+Generated query returned no results.
+41: Exact Match: False, Subset Match: False
+
+
+Processing 42th question: How many flights require a round-trip to purchase the fare? on database: atis
+Generation: SELECT COUNT(*) AS round_trip_flights FROM fare WHERE round_trip_required = 'Y'
+
+
+Generated Query Results (Normalized):
+   round_trip_flights
+0                   0
+
+Gold Query Results (Normalized):
+   round_trip_flights
+0                   0
+42: Exact Match: True, Subset Match: True
+
+
+Processing 43th question: What are the top 3 titles of the publications that have the highest number of references cited, ordered by the number of references cited in descending order? on database: academic
+Generation: SELECT publication.title, publication.reference_num FROM publication ORDER BY publication.reference_num DESC NULLS LAST LIMIT 3
+
+
+Generated Query Results (Normalized):
+   reference_num                      title
+0              4  Attention is all you need
+1              2  Optimizing GPU Throughput
+2              2     Data Mining Techniques
+
+Gold Query Results (Normalized):
+   reference_num                      title
+0              4  Attention is all you need
+1              2  Optimizing GPU Throughput
+2              2     Data Mining Techniques
+43: Exact Match: True, Subset Match: True
+
+
+Processing 44th question: Return the patient IDs, first names and last names of patients who have not received any treatments. on database: derm_treatment
+Generation: SELECT p.patient_id, p.first_name, p.last_name FROM patients p LEFT JOIN treatments t ON p.patient_id = t.patient_id WHERE t.patient_id IS NULL
+
+
+Generated Query Results (Normalized):
+  first_name last_name  patient_id
+0     Hannah    Garcia           8
+1      Kelly     Smith          11
+
+Gold Query Results (Normalized):
+  first_name last_name  patient_id
+0     Hannah    Garcia           8
+1      Kelly     Smith          11
+44: Exact Match: True, Subset Match: True
+
+
+Processing 45th question: What is the ratio of check-ins on weekends to check-ins on weekdays for the business named "Mark's Bistro"? on database: yelp
+Generation: SELECT CAST(SUM(CASE WHEN checkin.day ILIKE '%Saturday%' OR checkin.day ILIKE '%Sunday%' THEN checkin.count END) AS FLOAT) / NULLIF(SUM(CASE WHEN checkin.day ILIKE '%Monday%' OR checkin.day ILIKE '%Tuesday%' OR checkin.day ILIKE '%Wednesday%' OR checkin.day ILIKE '%Thursday%' OR checkin.day ILIKE '%Friday%' THEN checkin.count END), 0) AS ratio FROM checkin JOIN business ON checkin.business_id = business.business_id WHERE business.name ILIKE '%Mark\'s Bistro%'
+
+Error executing query: SELECT CAST(SUM(CASE WHEN checkin.day ILIKE '%Saturday%' OR checkin.day ILIKE '%Sunday%' THEN checkin.count END) AS FLOAT) / NULLIF(SUM(CASE WHEN checkin.day ILIKE '%Monday%' OR checkin.day ILIKE '%Tuesday%' OR checkin.day ILIKE '%Wednesday%' OR checkin.day ILIKE '%Thursday%' OR checkin.day ILIKE '%Friday%' THEN checkin.count END), 0) AS ratio FROM checkin JOIN business ON checkin.business_id = business.business_id WHERE business.name ILIKE '%Mark\'s Bistro%'
+Error: (psycopg2.errors.SyntaxError) syntax error at or near "s"
+LINE 1: ...ess.business_id WHERE business.name ILIKE '%Mark\'s Bistro%'
+                                                             ^
+
+[SQL: SELECT CAST(SUM(CASE WHEN checkin.day ILIKE '%%Saturday%%' OR checkin.day ILIKE '%%Sunday%%' THEN checkin.count END) AS FLOAT) / NULLIF(SUM(CASE WHEN checkin.day ILIKE '%%Monday%%' OR checkin.day ILIKE '%%Tuesday%%' OR checkin.day ILIKE '%%Wednesday%%' OR checkin.day ILIKE '%%Thursday%%' OR checkin.day ILIKE '%%Friday%%' THEN checkin.count END), 0) AS ratio FROM checkin JOIN business ON checkin.business_id = business.business_id WHERE business.name ILIKE '%%Mark\'s Bistro%%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+45: Exact Match: False, Subset Match: False
+
+
+Processing 46th question: How many mountains are there in each country? on database: geography
+Generation: SELECT mountain.country_name, COUNT(DISTINCT mountain.mountain_name) AS number_of_mountains FROM mountain GROUP BY mountain.country_name ORDER BY number_of_mountains DESC
+
+
+Generated Query Results (Normalized):
+  country_name  number_of_mountains
+0        Nepal                    8
+1     Pakistan                    2
+
+Gold Query Results (Normalized):
+  country_name  number_of_mountains
+0        Nepal                    8
+1     Pakistan                    2
+46: Exact Match: True, Subset Match: True
+
+
+Processing 47th question: What are the top 3 insurance types by average patient height in cm? Return the insurance type, average height and average weight. on database: derm_treatment
+Generation: SELECT ins_type, AVG(height_cm) AS avg_height, AVG(weight_kg) AS avg_weight FROM patients GROUP BY ins_type ORDER BY avg_height DESC LIMIT 3
+
+
+Generated Query Results (Normalized):
+   avg_height  avg_weight  ins_type
+0  169.600000        67.8   private
+1  171.666667        71.0  medicare
+2  176.500000        80.0  medicaid
+
+Gold Query Results (Normalized):
+   avg_height  avg_weight  ins_type
+0  169.600000        67.8   private
+1  171.666667        71.0  medicare
+2  176.500000        80.0  medicaid
+47: Exact Match: True, Subset Match: True
+
+
+Processing 48th question: What is the total number of check-ins on the 2 days before Saturday? on database: yelp
+Generation: SELECT SUM(checkin.count) AS total_checkins FROM checkin WHERE checkin.day ILIKE '%Saturday' AND checkin.day ILIKE '%Sunday'
+
+
+Generated Query Results (Normalized):
+  total_checkins
+0           None
+
+Gold Query Results (Normalized):
+  total_checkins
+0           None
+48: Exact Match: True, Subset Match: True
+
+
+Processing 49th question: Which papers are associated with the keyphrase "Machine Learning"? on database: scholar
+Generation: SELECT DISTINCT {paper.title, paper.paperid} FROM paper JOIN paperkeyphrase ON paper.paperid = paperkeyphrase.paperid JOIN keyphrase ON paperkeyphrase.keyphraseid = keyphrase.keyphraseid WHERE keyphrase.keyphrasename ILIKE '%Machine Learning%'
+
+Error executing query: SELECT DISTINCT {paper.title, paper.paperid} FROM paper JOIN paperkeyphrase ON paper.paperid = paperkeyphrase.paperid JOIN keyphrase ON paperkeyphrase.keyphraseid = keyphrase.keyphraseid WHERE keyphrase.keyphrasename ILIKE '%Machine Learning%'
+Error: (psycopg2.errors.SyntaxError) syntax error at or near "{"
+LINE 1: SELECT DISTINCT {paper.title, paper.paperid} FROM paper JOIN...
+                        ^
+
+[SQL: SELECT DISTINCT {paper.title, paper.paperid} FROM paper JOIN paperkeyphrase ON paper.paperid = paperkeyphrase.paperid JOIN keyphrase ON paperkeyphrase.keyphraseid = keyphrase.keyphraseid WHERE keyphrase.keyphrasename ILIKE '%%Machine Learning%%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+49: Exact Match: False, Subset Match: False
+
+
+Processing 50th question: What are the names of the authors who have written publications in the domain "Computer Science"? on database: academic
+Generation: SELECT author.name FROM author JOIN domain_author ON author.aid = domain_author.aid JOIN domain ON domain_author.did = domain.did WHERE domain.name ILIKE '%Computer Science%'
+
+
+Generated Query Results (Normalized):
+             name
+0  Ashish Vaswani
+1  Martin Odersky
+2    Noam Shazeer
+
+Gold Query Results (Normalized):
+             name
+0  Ashish Vaswani
+1  Martin Odersky
+2    Noam Shazeer
+50: Exact Match: True, Subset Match: True
+
+
+Processing 51th question: What is the average rating of restaurants that serve Mexican food in each city? on database: restaurants
+Generation: SELECT restaurant.city_name, AVG(restaurant.rating) AS average_rating FROM restaurant WHERE restaurant.food_type ILIKE '%Mexican%' GROUP BY restaurant.city_name
+
+
+Generated Query Results (Normalized):
+   average_rating      city_name
+0             4.1  San Francisco
+
+Gold Query Results (Normalized):
+   average_rating      city_name
+0             4.1  San Francisco
+51: Exact Match: True, Subset Match: True
+
+
+Processing 52th question: Which state code is Orlando International Airport in? on database: atis
+Generation: SELECT state_code FROM airport WHERE airport_code = 'MCO'
+
+
+Generated Query Results (Normalized):
+  state_code
+0         FL
+
+Gold Query Results (Normalized):
+  state_code
+0         FL
+52: Exact Match: True, Subset Match: True
+
+
+Processing 53th question: What is the total number of unique keyphrases associated with papers published in the journal with "IEEE Transactions" in its name? on database: scholar
+Generation: SELECT COUNT(DISTINCT k.keyphrasename) FROM keyphrase k JOIN paper p ON k.paperid = p.paperid JOIN journal j ON p.journalid = j.journalid WHERE j.journalname ILIKE '%IEEE Transactions%'
+
+Error executing query: SELECT COUNT(DISTINCT k.keyphrasename) FROM keyphrase k JOIN paper p ON k.paperid = p.paperid JOIN journal j ON p.journalid = j.journalid WHERE j.journalname ILIKE '%IEEE Transactions%'
+Error: (psycopg2.errors.UndefinedColumn) column k.paperid does not exist
+LINE 1: ...k.keyphrasename) FROM keyphrase k JOIN paper p ON k.paperid ...
+                                                             ^
+HINT:  Perhaps you meant to reference the column "p.paperid".
+
+[SQL: SELECT COUNT(DISTINCT k.keyphrasename) FROM keyphrase k JOIN paper p ON k.paperid = p.paperid JOIN journal j ON p.journalid = j.journalid WHERE j.journalname ILIKE '%%IEEE Transactions%%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+53: Exact Match: False, Subset Match: False
+
+
+Processing 54th question: Which states border the state where lake ontario is? on database: geography
+Generation: SELECT DISTINCT border_info.border FROM border_info JOIN lake ON lake.state_name = border_info.state_name WHERE lake.lake_name ILIKE '%Ontario%'
+
+
+Generated Query Results (Normalized):
+          border
+0    Connecticut
+1  Massachusetts
+2   Pennsylvania
+
+Gold Query Results (Normalized):
+          border
+0    Connecticut
+1  Massachusetts
+2   Pennsylvania
+54: Exact Match: True, Subset Match: True
+
+
+Processing 55th question: Which users have posted reviews for businesses located in the neighbourhood of "Downtown" and how many reviews have they posted? on database: yelp
+Generation: SELECT review.user_id, COUNT(review.rid) AS review_count FROM review JOIN business ON review.business_id = business.business_id JOIN neighbourhood ON business.business_id = neighbourhood.business_id WHERE neighbourhood.neighbourhood_name ILIKE '%Downtown%' GROUP BY review.user_id ORDER BY review_count DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+   review_count user_id
+0             2       1
+1             2       4
+2             2       5
+3             3       3
+
+Gold Query Results (Normalized):
+   review_count user_id
+0             2       1
+1             2       4
+2             2       5
+3             3       3
+55: Exact Match: True, Subset Match: True
+
+
+Processing 56th question: Which cars were in inventory in the latest snapshot for march 2023? Return the car id, make, model, and year. Cars are considered to be in inventory" if is_in_inventory is True." on database: car_dealership
+Generation: SELECT c.id, c.make, c.model, c.year FROM cars c JOIN inventory_snapshots s ON c.id = s.car_id WHERE s.is_in_inventory = TRUE AND s.snapshot_date = (SELECT MAX(snapshot_date) FROM inventory_snapshots WHERE snapshot_date <= '2023-03-31')
+
+
+Generated Query Results (Normalized):
+   id    make    model  year
+0   1  Toyota    Camry  2022
+1   3    Ford  Mustang  2023
+
+Gold Query Results (Normalized):
+   id    make    model  year
+0   1  Toyota    Camry  2022
+1   3    Ford  Mustang  2023
+56: Exact Match: True, Subset Match: True
+
+
+Processing 57th question: What is the total number of students enrolled in each course, ordered from highest to lowest? on database: advising
+Generation: SELECT {course.name, course.course_id}, course.num_enrolled FROM course ORDER BY course.num_enrolled DESC NULLS LAST
+
+Error executing query: SELECT {course.name, course.course_id}, course.num_enrolled FROM course ORDER BY course.num_enrolled DESC NULLS LAST
+Error: (psycopg2.errors.SyntaxError) syntax error at or near "{"
+LINE 1: SELECT {course.name, course.course_id}, course.num_enrolled ...
+               ^
+
+[SQL: SELECT {course.name, course.course_id}, course.num_enrolled FROM course ORDER BY course.num_enrolled DESC NULLS LAST]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+57: Exact Match: False, Subset Match: False
+
+
+Processing 58th question: Return merchants (merchant ID and name) who have not issued any coupons. on database: ewallet
+Generation: SELECT m.mid, m.name FROM consumer_div.merchants m LEFT JOIN consumer_div.coupons c ON m.mid = c.merchant_id WHERE c.merchant_id IS NULL
+
+
+Generated Query Results (Normalized):
+   mid               name
+0   11       FashionTrend
+1   12       GreenGourmet
+2   13        PetParadise
+3   14  HomeTechSolutions
+4   15          BookWorms
+
+Gold Query Results (Normalized):
+   mid               name
+0   11       FashionTrend
+1   12       GreenGourmet
+2   13        PetParadise
+3   14  HomeTechSolutions
+4   15          BookWorms
+58: Exact Match: True, Subset Match: True
+
+
+Processing 59th question: What were the total quarterly sales in 2023 grouped by customer's state? Represent each quarter as the first date in the quarter. on database: car_dealership
+Generation: SELECT date_trunc('quarter', sale_date) AS quarter, customers.state, SUM(sale_price) AS total_sales FROM sales JOIN customers ON sales.customer_id = customers.id WHERE sale_date BETWEEN '2023-01-01' AND '2023-12-31' GROUP BY quarter, customers.state ORDER BY quarter, customers.state
+
+
+Generated Query Results (Normalized):
+                     quarter state  total_sales
+0  2023-01-01 00:00:00-05:00    AZ      47000.0
+1  2023-01-01 00:00:00-05:00    CA      26500.0
+2  2023-01-01 00:00:00-05:00    IL      30500.0
+3  2023-01-01 00:00:00-05:00    TX      61500.0
+4  2023-04-01 00:00:00-04:00    CA     105500.0
+5  2023-04-01 00:00:00-04:00    NY      30000.0
+6  2023-04-01 00:00:00-04:00    PA      26800.0
+7  2023-04-01 00:00:00-04:00    TX      44500.0
+
+Gold Query Results (Normalized):
+                     quarter state  total_sales
+0  2023-01-01 00:00:00-05:00    AZ      47000.0
+1  2023-01-01 00:00:00-05:00    CA      26500.0
+2  2023-01-01 00:00:00-05:00    IL      30500.0
+3  2023-01-01 00:00:00-05:00    TX      61500.0
+4  2023-04-01 00:00:00-04:00    CA     105500.0
+5  2023-04-01 00:00:00-04:00    NY      30000.0
+6  2023-04-01 00:00:00-04:00    PA      26800.0
+7  2023-04-01 00:00:00-04:00    TX      44500.0
+59: Exact Match: True, Subset Match: True
+
+
+Processing 60th question: What is the total number of papers published in each journal, ordered by the journal name? on database: scholar
+Generation: SELECT journal.journalname, COUNT(paper.paperid) AS total_papers FROM paper JOIN journal ON paper.journalid = journal.journalid GROUP BY journal.journalname ORDER BY journal.journalname NULLS LAST
+
+
+Generated Query Results (Normalized):
+                                         journalname  total_papers
+0  IEEE Transactions on Pattern Analysis and Mach...             2
+1             International Journal of Mental Health             1
+2                                             Nature             1
+3                                            Science             1
+
+Gold Query Results (Normalized):
+                                         journalname  total_papers
+0  IEEE Transactions on Pattern Analysis and Mach...             2
+1             International Journal of Mental Health             1
+2                                             Nature             1
+3                                            Science             1
+60: Exact Match: True, Subset Match: True
+
+
+Processing 61th question: Which street has the most number of restaurants? on database: restaurants
+Generation: SELECT location.street_name, COUNT(DISTINCT location.restaurant_id) AS number_of_restaurants FROM LOCATION GROUP BY location.street_name ORDER BY number_of_restaurants DESC NULLS LAST LIMIT 1
+
+
+Generated Query Results (Normalized):
+   number_of_restaurants street_name
+0                      2    Pine Ave
+
+Gold Query Results (Normalized):
+   number_of_restaurants street_name
+0                      2    Pine Ave
+61: Exact Match: True, Subset Match: True
+
+
+Processing 62th question: What's the average predicted time to graduation since admission in no. of days? on database: advising
+Generation: SELECT AVG(predicted_graduation_semester - admit_term) AS avg_predicted_time_to_graduation FROM student
+
+
+Generated Query Results (Normalized):
+   avg_predicted_time_to_graduation
+0                            1460.0
+
+Gold Query Results (Normalized):
+   avg_predicted_time_to_graduation
+0                            1460.0
+62: Exact Match: True, Subset Match: True
+
+
+Processing 63th question: Which organizations have authors who have written publications in the domain "Machine Learning"? on database: academic
+Generation: SELECT DISTINCT {o.name, o.oid} FROM organization o JOIN domain_author da ON o.oid = da.oid JOIN domain_publication dp ON da.did = dp.did JOIN publication p ON dp.pid = p.pid WHERE dp.did = (SELECT did FROM domain WHERE LOWER(name) ILIKE '%machine learning%')
+
+Error executing query: SELECT DISTINCT {o.name, o.oid} FROM organization o JOIN domain_author da ON o.oid = da.oid JOIN domain_publication dp ON da.did = dp.did JOIN publication p ON dp.pid = p.pid WHERE dp.did = (SELECT did FROM domain WHERE LOWER(name) ILIKE '%machine learning%')
+Error: (psycopg2.errors.SyntaxError) syntax error at or near "{"
+LINE 1: SELECT DISTINCT {o.name, o.oid} FROM organization o JOIN dom...
+                        ^
+
+[SQL: SELECT DISTINCT {o.name, o.oid} FROM organization o JOIN domain_author da ON o.oid = da.oid JOIN domain_publication dp ON da.did = dp.did JOIN publication p ON dp.pid = p.pid WHERE dp.did = (SELECT did FROM domain WHERE LOWER(name) ILIKE '%%machine learning%%')]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+63: Exact Match: False, Subset Match: False
+
+
+Processing 64th question: How many reviews were posted by users with the name "Sarah Williams" in the month of April 2021? on database: yelp
+Generation: SELECT COUNT(*) AS review_count FROM review r JOIN users u ON r.user_id = u.user_id WHERE u.name ILIKE '%Sarah Williams%' AND r.month = 'April' AND r.year = 2021
+
+
+Generated Query Results (Normalized):
+   review_count
+0             1
+
+Gold Query Results (Normalized):
+   review_count
+0             1
+64: Exact Match: True, Subset Match: True
+
+
+Processing 65th question: Return the top 5 states by total revenue, showing the number of unique customers and total revenue (based on sale price) for each state. on database: car_dealership
+Generation: SELECT sales.customer_id, customers.state, COUNT(DISTINCT customers.id) AS num_customers, SUM(sales.sale_price) AS total_revenue FROM sales JOIN customers ON sales.customer_id = customers.id GROUP BY sales.customer_id, customers.state ORDER BY total_revenue DESC LIMIT 5
+
+
+Generated Query Results (Normalized):
+   customer_id  num_customers state  total_revenue
+0            2              1    CA        56000.0
+1            3              1    IL       124500.0
+2            7              1    TX       116000.0
+3           10              1    CA       158500.0
+4           12              1    WA        90000.0
+
+Gold Query Results (Normalized):
+   customer_id  num_customers state  total_revenue
+0            2              1    CA        56000.0
+1            3              1    IL       124500.0
+2            7              1    TX       116000.0
+3           10              1    CA       158500.0
+4           12              1    WA        90000.0
+65: Exact Match: True, Subset Match: True
+
+
+Processing 66th question: How many courses does each department offer? on database: advising
+Generation: SELECT course.department, COUNT(DISTINCT course.course_id) AS num_courses FROM course GROUP BY course.department ORDER BY num_courses DESC
+
+
+Generated Query Results (Normalized):
+         department  num_courses
+0  Computer Science            2
+1       Mathematics            1
+2           Physics            1
+
+Gold Query Results (Normalized):
+         department  num_courses
+0  Computer Science            2
+1       Mathematics            1
+2           Physics            1
+66: Exact Match: True, Subset Match: True
+
+
+Processing 67th question: What are the top 3 publications with the highest number of citations? on database: academic
+Generation: SELECT {publication.title, publication.pid}, publication.citation_num FROM publication ORDER BY publication.citation_num DESC NULLS LAST LIMIT 3
+
+Error executing query: SELECT {publication.title, publication.pid}, publication.citation_num FROM publication ORDER BY publication.citation_num DESC NULLS LAST LIMIT 3
+Error: (psycopg2.errors.SyntaxError) syntax error at or near "{"
+LINE 1: SELECT {publication.title, publication.pid}, publication.cit...
+               ^
+
+[SQL: SELECT {publication.title, publication.pid}, publication.citation_num FROM publication ORDER BY publication.citation_num DESC NULLS LAST LIMIT 3]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+67: Exact Match: False, Subset Match: False
+
+
+Processing 68th question: What is the ratio of papers that have been cited by 2 or more papers to papers that have been cited by less than 2 papers? on database: scholar
+Generation: SELECT CAST(COUNT(DISTINCT CASE WHEN c.citedpaperid >= 2 THEN c.citingpaperid END) AS FLOAT) / NULLIF(COUNT(DISTINCT CASE WHEN c.citedpaperid < 2 THEN c.citingpaperid END), 0) AS ratio FROM cite c
+
+
+Generated Query Results (Normalized):
+   ratio
+0    2.0
+
+Gold Query Results (Normalized):
+   ratio
+0    2.0
+68: Exact Match: True, Subset Match: True
+
+
+Processing 69th question: What is the proportion of papers that belong to more than 1 dataset to papers that belong to 1 dataset? on database: scholar
+Generation: SELECT CAST(COUNT(DISTINCT CASE WHEN cnt > 1 THEN subquery.paperid END) AS FLOAT) / NULLIF(COUNT(DISTINCT CASE WHEN cnt = 1 THEN subquery.paperid END), 0) AS ratio FROM (SELECT paperdataset.paperid, COUNT(paperdataset.datasetid) AS cnt FROM paperdataset GROUP BY paperdataset.paperid) AS subquery
+
+
+Generated Query Results (Normalized):
+   ratio
+0   0.25
+
+Gold Query Results (Normalized):
+   ratio
+0   0.25
+69: Exact Match: True, Subset Match: True
+
+
+Processing 70th question: What month were most students admitted? Return the no. of students and the month as a date on database: advising
+Generation: SELECT date_trunc('month', admit_term) AS month, COUNT(*) AS num_students FROM student GROUP BY month ORDER BY num_students DESC LIMIT 1
+
+
+Generated Query Results (Normalized):
+                      month  num_students
+0 2018-01-01 05:00:00+00:00             2
+
+Gold Query Results (Normalized):
+                      month  num_students
+0 2018-01-01 05:00:00+00:00             2
+70: Exact Match: True, Subset Match: True
+
+
+Processing 71th question: What are the names and areas of the lakes in Michigan? on database: geography
+Generation: SELECT lake.lake_name, lake.area FROM lake WHERE lake.state_name ILIKE 'Michigan'
+
+
+Generated Query Results (Normalized):
+     area      lake_name
+0   300.0     Lake Huron
+1   500.0  Lake Michigan
+2  1000.0  Lake Superior
+
+Gold Query Results (Normalized):
+     area      lake_name
+0   300.0     Lake Huron
+1   500.0  Lake Michigan
+2  1000.0  Lake Superior
+71: Exact Match: True, Subset Match: True
+
+
+Processing 72th question: Return the course id's that are offered in either semesters 1 or 2 and ends before 1pm and had an instructor on thursday. on database: advising
+Generation: SELECT DISTINCT course.course_id FROM course JOIN course_offering ON course.course_id = course_offering.course_id JOIN offering_instructor ON course_offering.offering_id = offering_instructor.offering_id JOIN instructor ON offering_instructor.instructor_id = instructor.instructor_id WHERE (course_offering.semester = 1 OR course_offering.semester = 2) AND course_offering.end_time < '13:00:00' AND instructor.name ILIKE '%thursday%'
+
+Generated query returned no results.
+72: Exact Match: False, Subset Match: False
+
+
+Processing 73th question: What are the top 3 payment methods by total payment amount received? Return the payment method, total number of payments and total amount. on database: car_dealership
+Generation: SELECT payment_method, COUNT(*) AS total_payments, SUM(payment_amount) AS total_amount FROM payments_received GROUP BY payment_method ORDER BY total_amount DESC LIMIT 3
+
+
+Generated Query Results (Normalized):
+  payment_method  total_amount  total_payments
+0    credit_card      426500.0               7
+1     debit_card      216000.0               5
+2      financing      252700.0               5
+
+Gold Query Results (Normalized):
+  payment_method  total_amount  total_payments
+0    credit_card      426500.0               7
+1     debit_card      216000.0               5
+2      financing      252700.0               5
+73: Exact Match: True, Subset Match: True
+
+
+Processing 74th question: What are the titles of all publications ordered alphabetically? on database: academic
+Generation: SELECT publication.title FROM publication ORDER BY publication.title ASC NULLS LAST
+
+
+Generated Query Results (Normalized):
+                                               title
+0  A Study on the Effects of Social Media on Ment...
+1                          Attention is all you need
+2                             Data Mining Techniques
+3                          Optimizing GPU Throughput
+4       The Effects of Climate Change on Agriculture
+
+Gold Query Results (Normalized):
+                                               title
+0  A Study on the Effects of Social Media on Ment...
+1                          Attention is all you need
+2                             Data Mining Techniques
+3                          Optimizing GPU Throughput
+4       The Effects of Climate Change on Agriculture
+74: Exact Match: True, Subset Match: True
+
+
+Processing 75th question: What is the average rating of restaurants serving each type of food? on database: restaurants
+Generation: SELECT restaurant.food_type, AVG(restaurant.rating) AS average_rating FROM restaurant GROUP BY restaurant.food_type
+
+
+Generated Query Results (Normalized):
+   average_rating food_type
+0            3.80  American
+1            4.10   Mexican
+2            4.25  Japanese
+3            4.50   Seafood
+4            4.60   Italian
+5            4.60     Vegan
+
+Gold Query Results (Normalized):
+   average_rating food_type
+0            3.80  American
+1            4.10   Mexican
+2            4.25  Japanese
+3            4.50   Seafood
+4            4.60   Italian
+5            4.60     Vegan
+75: Exact Match: True, Subset Match: True
+
+
+Processing 76th question: What's the absolute difference in time in days between today and the earliest flight departure? Give the answer as an integer. on database: atis
+Generation: SELECT CURRENT_DATE AS today, MIN(departure_time) AS earliest_departure FROM flight
+
+
+Generated Query Results (Normalized):
+   earliest_departure       today
+0          1577836800  2024-11-30
+
+Gold Query Results (Normalized):
+   earliest_departure       today
+0          1577836800  2024-11-30
+76: Exact Match: True, Subset Match: True
+
+
+Processing 77th question: What is the name of the venue where the paper with paper ID 2 was published, and how many papers were published in total in that venue? on database: scholar
+Generation: SELECT venue.venuename, COUNT(paper.paperid) AS total_papers FROM paper JOIN venue ON paper.venueid = venue.venueid WHERE paper.paperid = 2 GROUP BY venue.venuename
+
+
+Generated Query Results (Normalized):
+   total_papers                       venuename
+0             1  Conference on Machine Learning
+
+Gold Query Results (Normalized):
+   total_papers                       venuename
+0             1  Conference on Machine Learning
+77: Exact Match: True, Subset Match: True
+
+
+Processing 78th question: What are the top 5 best selling car models by total revenue? Return the make, model, total number of sales and total revenue. on database: car_dealership
+Generation: SELECT c.make, c.model, COUNT(s.id) AS total_sales, SUM(s.sale_price) AS total_revenue FROM cars c JOIN sales s ON c.id = s.car_id GROUP BY c.make, c.model ORDER BY total_revenue DESC LIMIT 5
+
+
+Generated Query Results (Normalized):
+     make    model  total_revenue  total_sales
+0    Audi       A4        81500.0            2
+1     BMW       X5        63000.0            1
+2    Ford  Mustang       233500.0            5
+3  Subaru  Outback        59500.0            2
+4   Tesla  Model 3       184500.0            4
+
+Gold Query Results (Normalized):
+     make    model  total_revenue  total_sales
+0    Audi       A4        81500.0            2
+1     BMW       X5        63000.0            1
+2    Ford  Mustang       233500.0            5
+3  Subaru  Outback        59500.0            2
+4   Tesla  Model 3       184500.0            4
+78: Exact Match: True, Subset Match: True
+
+
+Processing 79th question: What is the average number of citations received by publications in each year? on database: academic
+Generation: SELECT publication.year, AVG(publication.citation_num) AS average_citations FROM publication GROUP BY publication.year ORDER BY publication.year
+
+
+Generated Query Results (Normalized):
+   average_citations  year
+0                1.0  2021
+1                3.0  2020
+
+Gold Query Results (Normalized):
+   average_citations  year
+0                1.0  2021
+1                3.0  2020
+79: Exact Match: True, Subset Match: True
+
+
+Processing 80th question: How does the population of each city vary in relation to the population of its corresponding state? Return the city name, and the proportion of each city's population relative to the state. on database: geography
+Generation: SELECT city.city_name, CAST(city.population AS FLOAT) / NULLIF(state.population, 0) AS population_proportion FROM city JOIN state ON city.state_name = state.state_name ORDER BY population_proportion DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+     city_name  population_proportion
+0      Houston                   40.0
+1       London                  100.0
+2  Los Angeles                   50.0
+3       Mumbai                    6.0
+4     New York                    5.0
+5    Sao Paulo                   60.0
+6        Tokyo                   10.0
+7      Toronto                   10.0
+
+Gold Query Results (Normalized):
+     city_name  population_proportion
+0      Houston                   40.0
+1       London                  100.0
+2  Los Angeles                   50.0
+3       Mumbai                    6.0
+4     New York                    5.0
+5    Sao Paulo                   60.0
+6        Tokyo                   10.0
+7      Toronto                   10.0
+80: Exact Match: True, Subset Match: True
+
+
+Processing 81th question: Which aircraft code can carry the highest weight of cargo that any aircraft can carry? on database: atis
+Generation: SELECT aircraft.aircraft_code FROM aircraft ORDER BY aircraft.weight DESC NULLS LAST LIMIT 1
+
+
+Generated Query Results (Normalized):
+  aircraft_code
+0          A380
+
+Gold Query Results (Normalized):
+  aircraft_code
+0          A380
+81: Exact Match: True, Subset Match: True
+
+
+Processing 82th question: What are the names of the restaurants in Los Angeles that have a rating higher than 4? on database: restaurants
+Generation: SELECT name FROM restaurant WHERE rating > 4 AND city_name ILIKE '%Los Angeles%'
+
+
+Generated Query Results (Normalized):
+              name
+0  The Pasta House
+1    The Sushi Bar
+
+Gold Query Results (Normalized):
+              name
+0  The Pasta House
+1    The Sushi Bar
+82: Exact Match: True, Subset Match: True
+
+
+Processing 83th question: What is the ratio of Italian restaurants out of all restaurants in Los Angeles? on database: restaurants
+Generation: SELECT CAST(SUM(CASE WHEN restaurant.food_type ILIKE '%Italian%' THEN 1 ELSE 0 END) AS FLOAT) / NULLIF(COUNT(DISTINCT restaurant.id), 0) AS ratio FROM restaurant WHERE restaurant.city_name ILIKE '%Los Angeles%'
+
+
+Generated Query Results (Normalized):
+      ratio
+0  0.333333
+
+Gold Query Results (Normalized):
+      ratio
+0  0.333333
+83: Exact Match: True, Subset Match: True
+
+
+Processing 84th question: What is the ratio of aircraft capacity to its range in miles for each aircraft code? on database: atis
+Generation: SELECT aircraft.aircraft_code, CAST(aircraft.capacity AS FLOAT) / NULLIF(aircraft.range_miles, 0) AS capacity_to_range FROM aircraft ORDER BY capacity_to_range DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+  aircraft_code  capacity_to_range
+0          A320           0.072727
+1          A330           0.069291
+2          A350           0.055000
+3          A380           0.106625
+4          B737           0.059740
+5          B747           0.048627
+6          B777           0.064290
+7          B787           0.043825
+8        CRJ200           0.028818
+9          E190           0.047500
+
+Gold Query Results (Normalized):
+  aircraft_code  capacity_to_range
+0          A320           0.072727
+1          A330           0.069291
+2          A350           0.055000
+3          A380           0.106625
+4          B737           0.059740
+5          B747           0.048627
+6          B777           0.064290
+7          B787           0.043825
+8        CRJ200           0.028818
+9          E190           0.047500
+84: Exact Match: True, Subset Match: True
+
+
+Processing 85th question: What's the name and rating of all the restaurants that have a rating greater than 4 and are located in the city of New York? on database: restaurants
+Generation: SELECT name, rating FROM restaurant WHERE rating > 4 AND city_name ILIKE '%New York%'
+
+
+Generated Query Results (Normalized):
+              name  rating
+0  The Pizza Place     4.7
+1   The Ramen Shop     4.3
+
+Gold Query Results (Normalized):
+              name  rating
+0  The Pizza Place     4.7
+1   The Ramen Shop     4.3
+85: Exact Match: True, Subset Match: True
+
+
+Processing 86th question: How many restaurants serve Italian food in each region? on database: restaurants
+Generation: SELECT geographic.region, COUNT(DISTINCT restaurant.id) AS number_of_restaurants FROM geographic JOIN restaurant ON geographic.city_name = restaurant.city_name WHERE restaurant.food_type ILIKE '%Italian%' GROUP BY geographic.region ORDER BY number_of_restaurants DESC
+
+
+Generated Query Results (Normalized):
+   number_of_restaurants      region
+0                      1  California
+1                      1    New York
+
+Gold Query Results (Normalized):
+   number_of_restaurants      region
+0                      1  California
+1                      1    New York
+86: Exact Match: True, Subset Match: True
+
+
+Processing 87th question: How many reviews were there 2 months before the review with id 3? on database: yelp
+Generation: SELECT COUNT(*) AS review_count FROM review r JOIN business b ON r.business_id = b.business_id WHERE r.rid < 3 AND (r.month = 'January' AND r.year = 2019) AND (b.review_count - r.review_count) >= 2
+
+Error executing query: SELECT COUNT(*) AS review_count FROM review r JOIN business b ON r.business_id = b.business_id WHERE r.rid < 3 AND (r.month = 'January' AND r.year = 2019) AND (b.review_count - r.review_count) >= 2
+Error: (psycopg2.errors.UndefinedColumn) column r.review_count does not exist
+LINE 1: ...January' AND r.year = 2019) AND (b.review_count - r.review_c...
+                                                             ^
+HINT:  Perhaps you meant to reference the column "b.review_count".
+
+[SQL: SELECT COUNT(*) AS review_count FROM review r JOIN business b ON r.business_id = b.business_id WHERE r.rid < 3 AND (r.month = 'January' AND r.year = 2019) AND (b.review_count - r.review_count) >= 2]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+87: Exact Match: False, Subset Match: False
+
+
+Processing 88th question: What is the ratio of the population of the United States to the population of California? on database: geography
+Generation: SELECT (CAST(state.population AS FLOAT) / NULLIF(state.population, 0)) AS population_ratio FROM state WHERE state.state_name ILIKE 'United States' INTERSECT SELECT (CAST(state.population AS FLOAT) / NULLIF(state.population, 0)) AS population_ratio FROM state WHERE state.state_name ILIKE 'California'
+
+Generated query returned no results.
+88: Exact Match: False, Subset Match: False
+
+
+Processing 89th question: What are the highest mountains in meters, ordered from highest to lowest altitude? on database: geography
+Generation: SELECT mountain.mountain_name, mountain.mountain_altitude FROM mountain ORDER BY mountain.mountain_altitude DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+   mountain_altitude  mountain_name
+0              10000  Mount Everest
+1               9000   Nanga Parbat
+2               8000        Cho Oyu
+3               7000        Manaslu
+4               6000     Dhaulagiri
+5               5000             K2
+6               4000         Makalu
+7               3000  Kangchenjunga
+8               2000         Lhotse
+9               1000      Annapurna
+
+Gold Query Results (Normalized):
+   mountain_altitude  mountain_name
+0              10000  Mount Everest
+1               9000   Nanga Parbat
+2               8000        Cho Oyu
+3               7000        Manaslu
+4               6000     Dhaulagiri
+5               5000             K2
+6               4000         Makalu
+7               3000  Kangchenjunga
+8               2000         Lhotse
+9               1000      Annapurna
+89: Exact Match: True, Subset Match: True
+
+
+Processing 90th question: How many students were predicted to graduate in the last 10 years? on database: advising
+Generation: SELECT COUNT(*) AS number_of_students FROM student WHERE predicted_graduation_semester >= DATE_TRUNC('year', CURRENT_DATE) - INTERVAL '10 years'
+
+
+Generated Query Results (Normalized):
+   number_of_students
+0                   4
+
+Gold Query Results (Normalized):
+   number_of_students
+0                   4
+90: Exact Match: True, Subset Match: True
+
+
+Processing 91th question: Which neighbourhoods have the highest number of businesses, and how many businesses are located in each neighbourhood? on database: yelp
+Generation: SELECT neighbourhood.neighbourhood_name, COUNT(DISTINCT business.business_id) AS business_count FROM business JOIN neighbourhood ON business.business_id = neighbourhood.business_id GROUP BY neighbourhood.neighbourhood_name ORDER BY business_count DESC NULLS LAST
+
+
+Generated Query Results (Normalized):
+   business_count neighbourhood_name
+0               1          Hollywood
+1               1    Upper East Side
+2               2            Midtown
+3               3           Downtown
+
+Gold Query Results (Normalized):
+   business_count neighbourhood_name
+0               1          Hollywood
+1               1    Upper East Side
+2               2            Midtown
+3               3           Downtown
+91: Exact Match: True, Subset Match: True
+
+
+Processing 92th question: What's the average duration between departure and arrival times minus 34 minutes? Convert from UNIX to regular datetime, and return the answer in minutes on database: atis
+Generation: SELECT (to_timestamp(arrival_time) - to_timestamp(departure_time)) / interval '34 minutes' AS duration_minutes FROM flight
+
+Error executing query: SELECT (to_timestamp(arrival_time) - to_timestamp(departure_time)) / interval '34 minutes' AS duration_minutes FROM flight
+Error: (psycopg2.errors.UndefinedFunction) operator does not exist: interval / interval
+LINE 1: ...amp(arrival_time) - to_timestamp(departure_time)) / interval...
+                                                             ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT (to_timestamp(arrival_time) - to_timestamp(departure_time)) / interval '34 minutes' AS duration_minutes FROM flight]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+92: Exact Match: False, Subset Match: False
+
+
+Processing 93th question: What are the names of the journals in the database, ordered by the length of the journal name from shortest to longest? on database: scholar
+Generation: SELECT journal.journalname FROM journal ORDER BY LENGTH(journal.journalname)
+
+
+Generated Query Results (Normalized):
+                                         journalname
+0  IEEE Transactions on Pattern Analysis and Mach...
+1             International Journal of Mental Health
+2                                             Nature
+3                                            Science
+
+Gold Query Results (Normalized):
+                                         journalname
+0  IEEE Transactions on Pattern Analysis and Mach...
+1             International Journal of Mental Health
+2                                             Nature
+3                                            Science
+93: Exact Match: True, Subset Match: True
+
+
+Processing 94th question: What is the total number of publications published in each year? on database: academic
+Generation: SELECT publication.year, COUNT(publication.pid) AS total_publications FROM publication GROUP BY publication.year ORDER BY publication.year
+
+
+Generated Query Results (Normalized):
+   total_publications  year
+0                   2  2020
+1                   3  2021
+
+Gold Query Results (Normalized):
+   total_publications  year
+0                   2  2020
+1                   3  2021
+94: Exact Match: True, Subset Match: True
+
+
+Processing 95th question: How many course offerings have a final exam and how many do not? on database: advising
+Generation: SELECT SUM(CASE WHEN has_final_exam THEN 1 ELSE 0 END) AS num_offerings_with_final_exam, SUM(CASE WHEN has_final_exam THEN 0 ELSE 1 END) AS num_offerings_without_final_exam FROM course_offering
+
+
+Generated Query Results (Normalized):
+   num_offerings_with_final_exam  num_offerings_without_final_exam
+0                              6                                 2
+
+Gold Query Results (Normalized):
+   num_offerings_with_final_exam  num_offerings_without_final_exam
+0                              6                                 2
+95: Exact Match: True, Subset Match: True
+
+
+Processing 96th question: What are the top 2 airlines with the most flights? on database: atis
+Generation: SELECT airline.airline_name, COUNT(flight.airline_code) AS flight_count FROM flight JOIN airline ON flight.airline_code = airline.airline_code GROUP BY airline.airline_name ORDER BY flight_count DESC LIMIT 2
+
+
+Generated Query Results (Normalized):
+        airline_name  flight_count
+0  American Airlines             3
+1    United Airlines             2
+
+Gold Query Results (Normalized):
+        airline_name  flight_count
+0    United Airlines             2
+1  American Airlines             3
+
+Gold Query Results (Normalized):
+        airline_name  flight_count
+0    United Airlines             2
+1  American Airlines             3
+
+Gold Query Results (Normalized):
+        airline_name  flight_count
+0    United Airlines             2
+1  American Airlines             3
+96: Exact Match: False, Subset Match: True
+
+
+Processing 97th question: What are the names and altitudes of the mountains in Nepal? on database: geography
+Generation: SELECT mountain.mountain_name, mountain.mountain_altitude FROM mountain WHERE mountain.country_name ILIKE '%Nepal%'
+
+
+Generated Query Results (Normalized):
+   mountain_altitude  mountain_name
+0               1000      Annapurna
+1               2000         Lhotse
+2               3000  Kangchenjunga
+3               4000         Makalu
+4               6000     Dhaulagiri
+5               7000        Manaslu
+6               8000        Cho Oyu
+7              10000  Mount Everest
+
+Gold Query Results (Normalized):
+   mountain_altitude  mountain_name
+0               1000      Annapurna
+1               2000         Lhotse
+2               3000  Kangchenjunga
+3               4000         Makalu
+4               6000     Dhaulagiri
+5               7000        Manaslu
+6               8000        Cho Oyu
+7              10000  Mount Everest
+97: Exact Match: True, Subset Match: True
+
+
+Processing 98th question: Which countries have both lakes and rivers? on database: geography
+Generation: SELECT lake.country_name AS country FROM lake JOIN river ON lake.country_name = river.country_name GROUP BY lake.country_name INTERSECT SELECT lake.country_name FROM lake EXCEPT SELECT river.country_name FROM river
+
+Generated query returned no results.
+98: Exact Match: False, Subset Match: False
+
+
+Processing 99th question: How many keyphrases are associated with each paper? on database: scholar
+Generation: SELECT paperkeyphrase.paperid, COUNT(paperkeyphrase.keyphraseid) AS num_keyphrases FROM paperkeyphrase GROUP BY paperkeyphrase.paperid
+
+
+Generated Query Results (Normalized):
+   num_keyphrases  paperid
+0               1        1
+1               1        2
+2               1        4
+3               2        3
+4               2        5
+
+Gold Query Results (Normalized):
+   num_keyphrases  paperid
+0               1        1
+1               1        2
+2               1        4
+3               2        3
+4               2        5
+99: Exact Match: True, Subset Match: True
+
+
+Processed 100 rows.
+Matched 75 rows.
+Accuracy: 75.000%

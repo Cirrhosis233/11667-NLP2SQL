@@ -268,6 +268,6 @@ if __name__ == "__main__":
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_20.json"
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_1.json"
     
-    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v5/eval_train_codellama_inference_comma.json"
+    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v6/eval_test_codellama_inference_comma.json"
 
     process_json_file(json_file_path, db_creds)

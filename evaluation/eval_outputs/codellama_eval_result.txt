@@ -154,3 +154,22 @@ File: /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/p
 Total Queries: 150
 Exact Matches: 23
 Accuracy: 15.33%
+
+
+
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v6/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.1/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.2/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.3/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.4/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.5/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.6/eval_train_codellama_inference.json"
