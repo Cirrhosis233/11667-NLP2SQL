@@ -13,8 +13,26 @@
 # python inference_vllm.py --model codellama --data val --prompt prompts/prompt_v2.md --output inference_output/prompt_v2/codellama_v0
 # python inference_vllm.py --model codellama --data eval_train --prompt prompts/prompt_v2.md --output inference_output/prompt_v2/codellama_v0
 
-python inference_vllm.py --model sqlcoder --data val --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/sqlcoder_v0
-python inference_vllm.py --model sqlcoder --data eval_train --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/sqlcoder_v0
+python inference_vllm.py --model sqlcoder --data val --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/
+python inference_vllm.py --model sqlcoder --data eval_train --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/
+python inference_vllm.py --model sqlcoder --data val --prompt prompts/prompt_v0.2.md --output inference_output/prompt_v0.2/
+python inference_vllm.py --model sqlcoder --data eval_train --prompt prompts/prompt_v0.2.md --output inference_output/prompt_v0.2/
+python inference_vllm.py --model sqlcoder --data val --prompt prompts/prompt_v0.3.md --output inference_output/prompt_v0.3/
+python inference_vllm.py --model sqlcoder --data eval_train --prompt prompts/prompt_v0.3.md --output inference_output/prompt_v0.3/
+
+python inference_vllm.py --model codellama --data val --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/
+python inference_vllm.py --model codellama --data eval_train --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/
+python inference_vllm.py --model codellama --data val --prompt prompts/prompt_v0.2.md --output inference_output/prompt_v0.2/
+python inference_vllm.py --model codellama --data eval_train --prompt prompts/prompt_v0.2.md --output inference_output/prompt_v0.2/
+python inference_vllm.py --model codellama --data val --prompt prompts/prompt_v0.3.md --output inference_output/prompt_v0.3/
+python inference_vllm.py --model codellama --data eval_train --prompt prompts/prompt_v0.3.md --output inference_output/prompt_v0.3/
+
+python inference_vllm.py --model deepseek --data val --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/
+python inference_vllm.py --model deepseek --data eval_train --prompt prompts/prompt_v0.1.md --output inference_output/prompt_v0.1/
+python inference_vllm.py --model deepseek --data val --prompt prompts/prompt_v0.2.md --output inference_output/prompt_v0.2/
+python inference_vllm.py --model deepseek --data eval_train --prompt prompts/prompt_v0.2.md --output inference_output/prompt_v0.2/
+python inference_vllm.py --model deepseek --data val --prompt prompts/prompt_v0.3.md --output inference_output/prompt_v0.3/
+python inference_vllm.py --model deepseek --data eval_train --prompt prompts/prompt_v0.3.md --output inference_output/prompt_v0.3/
 
 
 # python inference_vllm.py --model codellama --data val --prompt prompts/prompt_v3.md --output inference_output/prompt_v3/codellama_v0
