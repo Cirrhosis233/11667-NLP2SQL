@@ -239,6 +239,7 @@ def process_json_file(json_file: str, db_creds: Dict):
 
         if not generated_query:
             print("No generated query available.")
+            total_count += 1
             continue
         
         print(f"Generation: {generated_query}\n")
@@ -268,6 +269,6 @@ if __name__ == "__main__":
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_20.json"
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_1.json"
     
-    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v3/codellama_v6/eval_test_codellama_inference_comma.json"
+    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/eval_train_sqlcoder_inference_comma.json"
 
     process_json_file(json_file_path, db_creds)

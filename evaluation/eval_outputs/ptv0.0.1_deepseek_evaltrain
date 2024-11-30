@@ -1,0 +1,464 @@
+Processing 0th question: What is the total number of credits earned by students in each program? on database: advising
+No generated query available.
+Processing 0th question: Which flight has the shortest duration between departure and arrival times? Convert to integer minutes. on database: atis
+No generated query available.
+Processing 0th question: Which airports have the shortest minimum connect time, sorted in ascending order? Show the minimum connect time. on database: atis
+No generated query available.
+Processing 0th question: What are the names of all the courses offered by the department of Computer Science? on database: advising
+Generation: SELECT name FROM course WHERE department = 'Computer Science'
+
+
+Generated Query Results (Normalized):
+                               name
+0             Distributed Databases
+1  Introduction to Computer Science
+
+Gold Query Results (Normalized):
+                               name
+0             Distributed Databases
+1  Introduction to Computer Science
+0: Exact Match: True, Subset Match: True
+
+
+Processing 1th question: Please provide a list of business names in New York and their average ratings ordered by the highest average rating first. on database: yelp
+No generated query available.
+Processing 1th question: What is the average length of rivers in each country? on database: geography
+No generated query available.
+Processing 1th question: How long has it been in days since the last admitted student? Give the answer as an integer. on database: advising
+No generated query available.
+Processing 1th question: What are the top 2 most frequently used device types for user sessions and their respective counts? on database: ewallet
+No generated query available.
+Processing 1th question: Which flights operate on Mondays and Wednesdays? Give me the relevant flight numbers on database: atis
+No generated query available.
+Processing 1th question: Which rivers traverse at least 3 cities/landmarks? on database: geography
+No generated query available.
+Processing 1th question: What is the ratio of the total number of publications to the total number of keywords within each domain ID? Show all domain IDs. on database: academic
+No generated query available.
+Processing 1th question: What are the top 3 most frequently used coupon codes? Return the coupon code, total number of redemptions, and total amount redeemed. on database: ewallet
+No generated query available.
+Processing 1th question: What are the names of the authors who wrote the paper with the title "The Effects of Climate Change on Agriculture"? on database: scholar
+No generated query available.
+Processing 1th question: What is the ratio of authors who have written 3 or more papers to authors who have written less than 3 papers? on database: scholar
+No generated query available.
+Processing 1th question: Which authors have written publications in both the domain "Machine Learning" and the domain "Data Science"? on database: academic
+No generated query available.
+Processing 1th question: What is the monthly average transaction price for successful transactions in the 1st quarter of 2023? on database: broker_context
+No generated query available.
+Processing 1th question: What are the top 3 businesses in terms of review count? on database: yelp
+No generated query available.
+Processing 1th question: Which lakes have the largest areas in square kilometers, ordered from largest to smallest? on database: geography
+Generation: SELECT lake_name, area 
+FROM public.lake 
+ORDER BY area DESC
+
+
+Generated Query Results (Normalized):
+     area        lake_name
+0  1200.0     Lake Qinghai
+1  1000.0    Lake Superior
+2   900.0      Lake Baikal
+3   800.0    Lake Victoria
+4   700.0      Lake Malawi
+5   600.0  Lake Tanganyika
+6   500.0    Lake Michigan
+7   400.0     Lake Ontario
+8   300.0       Lake Huron
+9   200.0        Lake Erie
+
+Gold Query Results (Normalized):
+     area        lake_name
+0  1200.0     Lake Qinghai
+1  1000.0    Lake Superior
+2   900.0      Lake Baikal
+3   800.0    Lake Victoria
+4   700.0      Lake Malawi
+5   600.0  Lake Tanganyika
+6   500.0    Lake Michigan
+7   400.0     Lake Ontario
+8   300.0       Lake Huron
+9   200.0        Lake Erie
+1: Exact Match: True, Subset Match: True
+
+
+Processing 2th question: show all placebo treatment id, start and end date, where there concomitant_meds were started within 2 weeks of starting the treatment. also return the start and end dates of all concomitant drug usage. on database: derm_treatment
+No generated query available.
+Processing 2th question: What is the average cost of a one-way trip for each airport pair in the fare table? on database: atis
+No generated query available.
+Processing 2th question: Return the ticker ID and symbol of tickers that do not have any daily price records. on database: broker_context
+No generated query available.
+Processing 2th question: What is the total cost of all round-trip fares from New York (JFK) to Los Angeles? on database: atis
+Generation: SELECT SUM(round_trip_cost) as total_cost
+FROM public.fare
+WHERE from_airport = 'JFK' AND to_airport = 'LAX'
+
+
+Generated Query Results (Normalized):
+   total_cost
+0       400.0
+
+Gold Query Results (Normalized):
+   total_cost
+0       400.0
+2: Exact Match: True, Subset Match: True
+
+
+Processing 3th question: What is the ratio of papers that have more than 1 keyphrases to papers that have 1 keyphrase? on database: scholar
+No generated query available.
+Processing 3th question: What is the name of the instructor who has taught the most courses, and how many courses have they taught? on database: advising
+No generated query available.
+Processing 3th question: For each paper that cites other papers, how many other papers does it cite? Sort by the number of papers cited in descending order on database: scholar
+No generated query available.
+Processing 3th question: what is average age of all registered male patients with private insurance currently? on database: derm_treatment
+No generated query available.
+Processing 3th question: Return the number of payments made on weekends to the vendor named 'Utility Company' on database: car_dealership
+No generated query available.
+Processing 3th question: What are the top 3 diagnoses by maximum itch VAS score at day 100 and number of distinct patients? Return the diagnosis name, number of patients, and maximum itch score. on database: derm_treatment
+No generated query available.
+Processing 3th question: How does the ratio of publications to journals change over the years? Return the annual numbers of publications and journals as well. on database: academic
+No generated query available.
+Processing 3th question: Return the drug IDs and names of drugs that have not been used in any treatments. on database: derm_treatment
+No generated query available.
+Processing 3th question: Return the distinct list of ticker IDs that have daily price records on or after Apr 1, 2023. on database: broker_context
+No generated query available.
+Processing 3th question: What is the title of the publication that has received the highest number of citations? on database: academic
+No generated query available.
+Processing 3th question: What is the total population in cities by country? on database: geography
+No generated query available.
+Processing 3th question: What is the total number of check-ins for each day of the week for the business with ID "abc123"? on database: yelp
+No generated query available.
+Processing 3th question: How many papers are associated with the keyphrase "machine learning" and were published in the journal named "IEEE Transactions on Pattern Analysis and Machine Intelligence"? on database: scholar
+No generated query available.
+Processing 3th question: How many check-ins occurred on Mondays at businesses in the state of California? on database: yelp
+No generated query available.
+Processing 3th question: What are the top 2 categories of businesses with the highest average rating? on database: yelp
+No generated query available.
+Processing 3th question: Return the name and average rating for each business in new york on database: yelp
+No generated query available.
+Processing 3th question: What is the ratio of papers published in the year 2020 to the total number of papers in the database? on database: scholar
+No generated query available.
+Processing 3th question: Which airlines offer flights from Chicago (ORD) to New York (JFK), and how many stops do they have, sorted by number of stops in ascending order? on database: atis
+No generated query available.
+Processing 3th question: What are the top 5 combinations of customer state and ticker type by number of transactions? Return the customer state, ticker type and number of transactions. on database: broker_context
+No generated query available.
+Processing 3th question: List the restaurants starting from the best ratings to the lowest on database: restaurants
+No generated query available.
+Processing 3th question: Return the distinct list of customer IDs who have made a 'buy' transaction. on database: broker_context
+No generated query available.
+Processing 3th question: How many restaurants are there in each city? Order the results by the number of restaurants in descending order. on database: restaurants
+No generated query available.
+Processing 3th question: What is the minimum amount of time required for a connecting flight at JFK Airport? on database: atis
+Generation: SELECT MIN(minimum_connect_time) 
+FROM public.airport 
+WHERE airport_code = 'JFK'
+
+
+Generated Query Results (Normalized):
+   min
+0   23
+
+Gold Query Results (Normalized):
+   min
+0   23
+3: Exact Match: True, Subset Match: True
+
+
+Processing 4th question: What is the ratio of restaurants serving vegan food to restaurants serving non-vegan food in San Francisco? Match food_type case insensitively on database: restaurants
+No generated query available.
+Processing 4th question: Which courses have been taken by students in the Computer Science program? on database: advising
+No generated query available.
+Processing 4th question: What is the highest point in each state and what is the population density of that state? on database: geography
+No generated query available.
+Processing 4th question: Which states have the highest population density in people per square kilometer, ordered from highest to lowest? on database: geography
+No generated query available.
+Processing 4th question: How many publications were presented at each conference, ordered by the number of publications in descending order? Give the names of the conferences and their corresponding number of publications. on database: academic
+No generated query available.
+Processing 4th question: Return users (user ID and username) who have not received any notifications on database: ewallet
+No generated query available.
+Processing 4th question: How many rivers flow through each country? on database: geography
+No generated query available.
+Processing 4th question: Return the distinct list of merchant IDs that have received money from a transaction. Consider all transaction types in the results you return, but only include the merchant ids in your final answer. on database: ewallet
+No generated query available.
+Processing 4th question: What is the total count of restaurants in each city? on database: restaurants
+No generated query available.
+Processing 4th question: What is the proportion of flights with stops out of all flights for each airline code? on database: atis
+No generated query available.
+Processing 4th question: Who were the top 3 sales representatives by total revenue in the past 3 months, inclusive of today's date? Return their first name, last name, total number of sales and total revenue. Note that revenue refers to the sum of sale_price in the sales table. on database: car_dealership
+No generated query available.
+Processing 4th question: Which authors belong to the same domain as Martin? on database: academic
+No generated query available.
+Processing 4th question: Which authors have published the most papers, ordered by the number of papers they have published in descending order? on database: scholar
+No generated query available.
+Processing 4th question: What are the longest rivers in meters, ordered from longest to shortest? on database: geography
+Generation: SELECT river_name, length 
+FROM public.river 
+ORDER BY length DESC
+
+
+Generated Query Results (Normalized):
+   length   river_name
+0    1000         Nile
+1     900        Rhine
+2     800        Volga
+3     700       Danube
+4     600       Mekong
+5     500       Amazon
+6     400        Yukon
+7     300      Yangtze
+8     200  Mississippi
+9     100           Po
+
+Gold Query Results (Normalized):
+   length   river_name
+0    1000         Nile
+1     900        Rhine
+2     800        Volga
+3     700       Danube
+4     600       Mekong
+5     500       Amazon
+6     400        Yukon
+7     300      Yangtze
+8     200  Mississippi
+9     100           Po
+4: Exact Match: True, Subset Match: True
+
+
+Processing 5th question: show me the daily total amount of payments received in the whole of the previous ISO week not including the current week, split by the payment_method on database: car_dealership
+No generated query available.
+Processing 5th question: Which flight ids to Chicago (ORD) have the longest duration from departure to arrival, sorted in ascending order? on database: atis
+No generated query available.
+Processing 5th question: Return the distinct list of customer IDs that have made a purchase, based on joining the customers and sales tables. on database: car_dealership
+No generated query available.
+Processing 5th question: Get the ratio of population per area for each state on database: geography
+No generated query available.
+Processing 5th question: What is the ratio of one-way trip costs to round-trip costs for each fare? on database: atis
+No generated query available.
+Processing 5th question: What was the average transaction daily and monthly limit for the earliest setting snapshot in 2023? on database: ewallet
+No generated query available.
+Processing 5th question: How many reviews were posted for each business id in the year 2021? on database: yelp
+No generated query available.
+Processing 5th question: How many papers cite each paper in the dataset named "COVID-19 Research"? on database: scholar
+No generated query available.
+Processing 5th question: What cities have more than one restaurants with the same name, and how many of them are there? Return the city name, restaurant name, and restaurant count on database: restaurants
+No generated query available.
+Processing 5th question: What are the top 5 drugs by number of treatments and average drug amount per treatment? Return the drug name, number of treatments, and average drug amount. on database: derm_treatment
+No generated query available.
+Processing 5th question: What is the average rating of restaurants in each region? Order the results by the region name. on database: restaurants
+No generated query available.
+Processing 5th question: How does the average ratio of the cruising speed to the payload of an aircraft vary across different aircraft manufacturers? on database: atis
+No generated query available.
+Processing 5th question: What are the names of the businesses in the database, ordered alphabetically? on database: yelp
+No generated query available.
+Processing 5th question: What is the ratio of publications to authors in the database? on database: academic
+No generated query available.
+Processing 5th question: Which restaurants serve Italian cuisine or are located in New York? Order the results by the restaurant name. on database: restaurants
+No generated query available.
+Processing 5th question: What is the total number of check-ins for each business in the state of California? on database: yelp
+No generated query available.
+Processing 5th question: How many papers were published in the journal "nature" in the year 2020? on database: scholar
+No generated query available.
+Processing 5th question: How many meals are served in each compartment, sorted by the number of meals in descending order? on database: atis
+No generated query available.
+Processing 5th question: What is the total number of citations received by each author? on database: academic
+No generated query available.
+Processing 5th question: What is the ratio of the number of courses with projects to the number of courses with exams in each semester id? on database: advising
+No generated query available.
+Processing 5th question: What is the ratio of restaurants with a rating above 4 to restaurants with a rating below 4 in New York? on database: restaurants
+No generated query available.
+Processing 5th question: What is the total number of publications in each journal, ordered by the number of publications in descending order? on database: academic
+No generated query available.
+Processing 5th question: What is the total count of check-ins for each business id? on database: yelp
+No generated query available.
+Processing 5th question: Return the salesperson ID, first name and last name for salespersons that have no sales records, by doing a left join from the salespersons to sales table. on database: car_dealership
+No generated query available.
+Processing 5th question: What are the easiness scores for courses in the "Computer Science" department? Show both courses and scores. on database: advising
+No generated query available.
+Processing 5th question: Which airlines offer flights with a stopover in Dallas? on database: atis
+No generated query available.
+Processing 5th question: How many treatments for diagnoses containing 'psoriasis' (match with wildcards case-insensitively) involve drugs that have been FDA-approved and the treatments have ended within the last 6 months from today? on database: derm_treatment
+No generated query available.
+Processing 5th question: What is the ratio of the total number of students enrolled in courses with exams to the total number of students enrolled in courses without exams? on database: advising
+No generated query available.
+Processing 5th question: What are the aircraft codes for all aircraft with a cruising speed of over 200 mph? sort the aircraft codes in ascending order. on database: atis
+No generated query available.
+Processing 5th question: What are the top 5 countries by total transaction amount in the past 30 days, inclusive of 30 days ago? Return the country name, number of transactions and total transaction amount. on database: broker_context
+No generated query available.
+Processing 5th question: How many restaurants are there in each region? on database: restaurants
+No generated query available.
+Processing 5th question: Lowest daily closest price for symbol `VTI` in the past 7 days on database: broker_context
+No generated query available.
+Processing 5th question: Which states have fewer than a hundred thousand people? on database: geography
+No generated query available.
+Processing 5th question: List the last name, year of registration, and first treatment (date and id) by doctors who were registered 2 years ago. on database: derm_treatment
+No generated query available.
+Processing 5th question: What is the ratio of publications presented in conferences to publications published in journals? on database: academic
+No generated query available.
+Processing 5th question: What are the titles of the papers published in the year 2020, ordered alphabetically? on database: scholar
+No generated query available.
+Processing 5th question: What is the ratio of helpfulness scores to clarity scores for each course ID? on database: advising
+No generated query available.
+Processing 5th question: What are the top 5 countries by number of customers? Return the country name and number of customers. on database: broker_context
+No generated query available.
+Processing 5th question: How many reviews were written for businesses located in California in the last 10 months? on database: yelp
+No generated query available.
+Processing 5th question: What is the average cost of round-trip fares from Los Angeles (LAX) to Chicago (ORD) for each airline, sorted in descending order by average cost? on database: atis
+No generated query available.
+Processing 5th question: Count the number of flight departures for each month? on database: atis
+No generated query available.
+Processing 5th question: Which users did not get a notification within the first year of signing up? Return their usernames, emails and signup dates. on database: ewallet
+No generated query available.
+Processing 5th question: What are the publications written by authors from the 'Sociology' domain and presented at conferences in the year 2020? on database: academic
+No generated query available.
+Processing 5th question: How many months between June 2021 and December 2021 had reviews? on database: yelp
+No generated query available.
+Processing 5th question: What are the top 10 ticker symbols by total transaction amount? Return the ticker symbol, number of transactions and total transaction amount. on database: broker_context
+No generated query available.
+Processing 5th question: Which author had the most publications in the year 2021 and how many publications did he/she have that year? on database: academic
+No generated query available.
+Processing 5th question: What is the ratio of open businesses to closed businesses in the city of San Francisco? on database: yelp
+No generated query available.
+Processing 5th question: What is the total cost of round-trip fares for each airline code? on database: atis
+No generated query available.
+Processing 5th question: Get the cities in the United States and their population on database: geography
+Generation: SELECT city_name, population FROM city WHERE country_name = 'United States'
+
+
+Generated Query Results (Normalized):
+     city_name  population
+0      Chicago     1500000
+1      Houston     2000000
+2  Los Angeles     5000000
+3     New York     1000000
+
+Gold Query Results (Normalized):
+     city_name  population
+0      Chicago     1500000
+1      Houston     2000000
+2  Los Angeles     5000000
+3     New York     1000000
+5: Exact Match: True, Subset Match: True
+
+
+Processing 6th question: What is the total number of papers associated with each dataset? on database: scholar
+No generated query available.
+Processing 6th question: Return the customer who made the most sell transactions on 2023-04-01. Return the id, name and number of transactions. on database: broker_context
+No generated query available.
+Processing 6th question: What is the average clarity score for each instructor who taught a course? on database: advising
+No generated query available.
+Processing 6th question: What are the top 3 transaction statuses by number of transactions? Return the status and number of transactions. on database: broker_context
+No generated query available.
+Processing 6th question: What is the total number of publications presented in each conference? on database: academic
+No generated query available.
+Processing 6th question: How does the ratio of enrolled students to the number of reviews vary across different courses? on database: advising
+No generated query available.
+Processing 6th question: For treatments that ended in the year 2022 (from Jan 1st to Dec 31st inclusive), what is the average PASI score at day 100 and number of distinct patients per insurance type? Return the top 5 insurance types sorted by lowest average PASI score first. on database: derm_treatment
+No generated query available.
+Processing 6th question: What are the total number of customer signups for the top 2 states? Return the state and total signups, starting from the top. on database: car_dealership
+No generated query available.
+Processing 6th question: Return the treatment id, treatment start date, adverse event date and description of all adverse events that occured within 10 days after starting treatment on database: derm_treatment
+No generated query available.
+Processing 6th question: How many courses are offered for each semester id? on database: advising
+No generated query available.
+Processing 6th question: What is the total number of students who found the instructor to be hilarious per course id? on database: advising
+Generation: SELECT course_id, COUNT(student_id) 
+FROM comment_instructor 
+WHERE score = 5 
+GROUP BY course_id
+
+Error executing query: SELECT course_id, COUNT(student_id) 
+FROM comment_instructor 
+WHERE score = 5 
+GROUP BY course_id
+Error: (psycopg2.errors.UndefinedColumn) column "course_id" does not exist
+LINE 1: SELECT course_id, COUNT(student_id) 
+               ^
+
+[SQL: SELECT course_id, COUNT(student_id) 
+FROM comment_instructor 
+WHERE score = 5 
+GROUP BY course_id]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+Generated query returned no results.
+6: Exact Match: False, Subset Match: False
+
+
+Processing 7th question: What's the earliest flight departure time in the day in HH:MM? on database: atis
+No generated query available.
+Processing 7th question: what was the average user session duration in seconds split by device_type? on database: ewallet
+No generated query available.
+Processing 7th question: Which course has the highest number of enrolled students, and what is the enrollment number? on database: advising
+No generated query available.
+Processing 7th question: Which airlines offer flights from LAX to ORD? on database: atis
+No generated query available.
+Processing 7th question: What is the total number of reviews for each business category? on database: yelp
+No generated query available.
+Processing 7th question: How many students have declared a major in each program? on database: advising
+No generated query available.
+Processing 7th question: What are the top 5 domains with the highest number of authors associated with them? on database: academic
+No generated query available.
+Processing 7th question: Which lakes have a name that starts with "Lake"? They should be located in states with an area greater than 1000 square kilometers. on database: geography
+No generated query available.
+Processing 7th question: What is the ratio of the number of businesses in each state to the total number of businesses in the database? on database: yelp
+No generated query available.
+Processing 7th question: How many authors have published more than 2 papers? on database: scholar
+No generated query available.
+Processing 7th question: What are the top 3 doctor specialties by total drug amount prescribed for treatments started in the past 6 calendar months? Return the specialty, number of treatments, and total drug amount. on database: derm_treatment
+No generated query available.
+Processing 7th question: What is the ratio of the number of students who found the grading criteria clear and easy to understand to the number of students who received good feedback from the instructor for each course id? on database: advising
+No generated query available.
+Processing 7th question: What is the total number of restaurants serving each type of food? on database: restaurants
+No generated query available.
+Processing 7th question: Which authors are not part of any organization? on database: academic
+No generated query available.
+Processing 7th question: How many publications were published in journals whose names start with the letter "J"? on database: academic
+No generated query available.
+Processing 7th question: What was the message that came with the tip made exactly 2 months after March 2021? on database: yelp
+No generated query available.
+Processing 7th question: How many flights depart from each airport code, excluding departures with connections? on database: atis
+No generated query available.
+Processing 7th question: What is the total number of students who have taken a course with a final project or exam? on database: advising
+No generated query available.
+Processing 7th question: How many restaurants serve Italian food in each city? on database: restaurants
+No generated query available.
+Processing 7th question: What are the top 2 specialties by number of doctors? Return the specialty and number of doctors. on database: derm_treatment
+No generated query available.
+Processing 7th question: Which papers have the highest number of authors, ordered by the number of authors in descending order? on database: scholar
+No generated query available.
+Processing 7th question: What is the total number of reviews for each category in the state of "California"? on database: yelp
+No generated query available.
+Processing 7th question: Return the distinct list of patient IDs, first names and last names that have outcome assessments. on database: derm_treatment
+No generated query available.
+Processing 7th question: How does the ratio of authors to organizations differ by continent? on database: academic
+No generated query available.
+Processing 7th question: What is the total number of keyphrases associated with each paper, ordered by the paper ID in ascending order? on database: scholar
+No generated query available.
+Processing 7th question: number of transactions by users who joined in the past 70 days on database: broker_context
+No generated query available.
+Processing 7th question: What is the total number of students who participated actively for each course id, ordered from highest to lowest participants? on database: advising
+No generated query available.
+Processing 7th question: What is the ratio of the altitude of 'Mount Everest' to the altitude of 'Dhaulagiri'? Match strings exactly on database: geography
+Generation: SELECT 
+    (SELECT mountain_altitude FROM mountain WHERE mountain_name = 'Mount Everest') 
+    / 
+    (SELECT mountain_altitude FROM mountain WHERE mountain_name = 'Dhaulagiri') 
+    AS altitude_ratio
+
+
+Generated Query Results (Normalized):
+   altitude_ratio
+0               1
+
+Gold Query Results (Normalized):
+   altitude_ratio
+0               1
+7: Exact Match: True, Subset Match: True
+
+
+Processing 8th question: Return the customer id and the difference between their time from joining to their first transaction. Ignore customers who haven't made any transactions. on database: broker_context
+No generated query available.
+Processing 8th question: Return the name and phone number of the salesperson with the shortest time from being hired to getting fired. Return the number of days he/she was employed for. on database: car_dealership
+No generated query available.
+Processing 8th question: What is the total number of papers published in each year? on database: scholar
+No generated query available.
+Processed 150 rows.
+Matched 7 rows.
+Accuracy: 4.667%

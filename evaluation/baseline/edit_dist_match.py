@@ -58,24 +58,35 @@ def token_level_edit_distance(sql1, sql2):
     unmatched = total_tokens - 2 * sum(block.size for block in matcher.get_matching_blocks())
     return unmatched
 
-def evaluate_edit_distance(data):
+def evaluate_edit_distance(data, skip_penalty_multiplier=3):
     """
     Evaluate token-level edit distance for SQL generation accuracy.
     """
     total = len(data)
     total_edit_distance = 0
+    # i = 0
+    skipped_queries = 0
 
     for item in data:
+        # print(f"{i}")
         golden_sql = standardize_sql(item["answer"])
         generated_sql = standardize_sql(item["generation"])
+        if not generated_sql:
+            # If generated_sql is empty, log it and assign maximum penalty
+            # print(f"Warning: Empty generated SQL for query index {i}")
+            skipped_queries += 1
+            total_edit_distance += skip_penalty_multiplier * len(tokenize_sql(golden_sql))
+            # i += 1
+            continue
 
         # Calculate token-level edit distance
         edit_distance = token_level_edit_distance(golden_sql, generated_sql)
         total_edit_distance += edit_distance
+        # i += 1
 
     # Average edit distance
     avg_edit_distance = total_edit_distance / total if total > 0 else 0
-    return total, total_edit_distance, avg_edit_distance
+    return total, total_edit_distance, avg_edit_distance, skipped_queries
 
 def main():
     # Parse command-line arguments
@@ -97,11 +108,12 @@ def main():
         return
 
     # Evaluate token-level edit distance
-    total, total_edit_distance, avg_edit_distance = evaluate_edit_distance(data)
+    total, total_edit_distance, avg_edit_distance, empty_gen = evaluate_edit_distance(data)
 
     print(f"File: {file_path}")
     print(f"Total Queries: {total}")
     print(f"Total Distance: {total_edit_distance}")
+    print(f"Skipped Count (empty generation): {empty_gen}")
     print(f"Average Token-Level Edit Distance: {avg_edit_distance:.2f}")
 
 if __name__ == "__main__":

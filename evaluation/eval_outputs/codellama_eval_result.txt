@@ -173,3 +173,61 @@ python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQ
 python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.5/eval_train_codellama_inference.json"
 
 python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v7.6/eval_train_codellama_inference.json"
+
+
+
+
+
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.1/val_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.1/val_deepseek_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.1/val_sqlcoder_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.2/val_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.2/val_deepseek_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.2/val_sqlcoder_inference.json"
+
+
+
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.1/val_codellama_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.1/val_deepseek_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.1/val_sqlcoder_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.2/val_codellama_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.2/val_deepseek_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.2/val_sqlcoder_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.3/val_codellama_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.3/val_deepseek_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.3/val_sqlcoder_inference.json"
+
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/val_codellama_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/val_deepseek_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/val_sqlcoder_inference.json"
+
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/val_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/val_deepseek_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/val_sqlcoder_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/eval_train_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/eval_train_deepseek_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v0.0.1/eval_train_sqlcoder_inference.json"
