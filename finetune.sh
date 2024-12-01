@@ -8,5 +8,10 @@
 
 # python finetune_v1.py ./configs/codellama-v7.4.json 
 
-python finetune_v1.py ./configs/codellama-v7.5.json 
-python finetune_v1.py ./configs/codellama-v7.6.json 
+python finetune_v1.py ./configs/codellama-v8.json 
+python finetune_v1.py ./configs/codellama-v8.1.json 
+python finetune_v1.py ./configs/codellama-v8.2.json 
+
+python finetune_v1.py ./configs/deepseek-v1.json 
+
+python finetune_v1.py ./configs/sqlcoder-v1.json 
