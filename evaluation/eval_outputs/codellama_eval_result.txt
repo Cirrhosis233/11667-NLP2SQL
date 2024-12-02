@@ -243,3 +243,46 @@ python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/infe
 
 python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v0/eval_train_sqlcoder_inference.json
 python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v0/eval_test_sqlcoder_inference.json
+
+
+
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8/test_codellama_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.1/test_codellama_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.2/test_codellama_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/deepseek_v1/test_deepseek_inference.json"
+
+python edit_dist_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v1/test_sqlcoder_inference.json"
+
+
+
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8/test_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.1/test_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.2/test_codellama_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/deepseek_v1/test_deepseek_inference.json"
+
+python exact_match.py -f "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v1/test_sqlcoder_inference.json"
+
+
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8/eval_test_codellama_inference.json
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8/eval_train_codellama_inference.json
+
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.1/eval_test_codellama_inference.json
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.1/eval_train_codellama_inference.json
+
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.2/eval_test_codellama_inference.json
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/codellama_v8.2/eval_train_codellama_inference.json
+
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/deepseek_v1/eval_train_deepseek_inference.json
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/deepseek_v1/eval_test_deepseek_inference.json
+
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v1/eval_train_sqlcoder_inference.json
+python add_comma.py /Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v1/eval_test_sqlcoder_inference.json
+

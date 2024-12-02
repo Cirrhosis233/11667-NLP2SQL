@@ -269,6 +269,6 @@ if __name__ == "__main__":
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_20.json"
     # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_1.json"
     
-    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/deepseek_v0/eval_train_deepseek_inference_comma.json"
+    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v1/eval_train_sqlcoder_inference_comma.json"
 
     process_json_file(json_file_path, db_creds)
