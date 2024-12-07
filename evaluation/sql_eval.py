@@ -3,6 +3,7 @@
 # https://github.com/defog-ai/sql-eval/blob/main/tests/local_db_tests.py
 
 import json
+import sys
 import pandas as pd
 from sqlalchemy import create_engine
 from typing import Dict, Tuple, List
@@ -258,6 +259,12 @@ def process_json_file(json_file: str, db_creds: Dict):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python script_name.py <json_file_path>")
+        sys.exit(1)
+
+    json_file_path = sys.argv[1]
+    
     # Database credentials
     db_creds = {
         "host": "localhost",
@@ -266,9 +273,7 @@ if __name__ == "__main__":
         "password": "postgres"
     }
 
-    # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_20.json"
-    # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/evaluation/sql_eval_dataset_1.json"
     
-    json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v1/eval_train_sqlcoder_inference_comma.json"
+    # json_file_path = "/Users/yufeizhao/Desktop/11667MiniProject/11667-NLP2SQL/inference_output/prompt_v4/sqlcoder_v1/eval_train_sqlcoder_inference_comma.json"
 
     process_json_file(json_file_path, db_creds)

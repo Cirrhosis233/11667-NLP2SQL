@@ -45,3 +45,26 @@ If a query fails to execute (e.g., due to syntax errors, data type errors, divis
   - Gold queries are expanded into all possible minimal queries based on {} combinations.
   - Each expanded query is executed, and results are normalized for comparison.
  
+## Evaluation Pipeline
+Before doing the evaluation, please make sure you already installed all the requirements. 
+
+For each model, you will have a set of json files generated, including `eval_test_MODELNAME_inference.json`, `eval_train_MODELNAME_inference.json`, `test_MODELNAME_inference.json`, and `val_MODELNAME_inference.json`. For each of the files, first run the baseline evaluations. Please replace the `FILEPATH` below with the path to your json file. 
+```
+python evaluation/baseline/exact_match.py -f "FILEPATH"
+python evaluation/baseline/edit_dist_match.py -f "FILEPATH"
+```
+
+Then you will do the execution evaluation on the eval results, including `eval_test_MODELNAME_inference.json` and `eval_train_MODELNAME_inference.json`. 
+
+First, please convert the two json files by adding comma to separate objects (parenthesis), with `add_comma.py`. You will get the corresponding comma added files "FILEPATH_comma" in the same directory and use them for the execution evaluation. 
+```
+python evaluation/add_comma.py "FILEPATH"
+```
+Then you can run the following command to execute the generated sql in the modified json files. We put our output files to `evaluation/eval_outputs`. 
+```
+evaluation/sql_eval.py "FILEPATH_comma"
+or 
+evaluation/sql_eval.py "FILEPATH_comma" > OUTPUTFILE # output to a file
+```
+
+
