@@ -4,26 +4,60 @@
 
 - Python=3.11
 
+- ```bash
+  $ pip install requirements.txt
+  ```
+
 ## Datasets
 
-- [b-mc2/sql-create-context](https://huggingface.co/datasets/b-mc2/sql-create-context)
+- [b-mc2/sql-create-context](https://huggingface.co/datasets/b-mc2/sql-create-context): raw dataset for sql-create-context
+- [sql-eval](https://github.com/defog-ai/sql-eval): raw data for defog data
+- `datasets/sql-create-context-split`: local dataset created from b-mc2/sql-create-context
+- `datasets/train_merge_150x5_750`: local dataset that merges b-mc2/sql-create-context and defog data
+- `datasets/train_merge_150x5_750_diff_prompt` local dataset that merges b-mc2/sql-create-context and defog data, with unique prompt template incorporated
+- `datasets/train_merge_150x5_750_diff_prompt_gold` local dataset that merges b-mc2/sql-create-context and defog data, with unique prompt template incorporated, with golden `{}` query issue fixed
 
-  - split in `./datasets/sql-create-context-split`
+## All versions of Prompts
 
-  - ```python
-    from datasets import load_from_disk
-    split_dataset = load_from_disk("./datasets/sql-create-context-split")
-    ```
+Stored at `./prompts/*.md`
 
+## How to Run:
 
-## Models
+### Inference:
 
-- [defog/sqlcoder-7b-2](https://huggingface.co/defog/sqlcoder-7b-2)
+```bash
+$ python inference_vllm.py --model <base model> --data <data split> --prompt <prompt template file path> --output <output path> --lora <lora fineuned model path, not required>
+```
 
+- Example of usage can refer to `inference_vllm.sh`
 
-Module	Role in Transformer	Why Include It for Text2SQL?
-q_proj	Query projections for attention	Helps map user queries to the relevant parts of the schema.
-v_proj	Value projections for attention	Refines SQL syntax generation based on schema content.
-k_proj	Key projections for attention	Enhances alignment between query tokens and schema tokens.
-down_proj	Part of feed-forward network	Improves representation of query and schema after attention layers.
-up_proj	Part of feed-forward network	Boosts capacity for handling token-to-token mappings in SQL syntax.
+### Finetuning:
+
+#### Without Prompt Differentiation
+
+```bash
+$ python finetune.py ./configs/codellama-v0.json
+```
+
+Apply to:
+
+- `datasets/sql-create-context-split`: local dataset created from b-mc2/sql-create-context
+- `datasets/train_merge_150x5_750`: local dataset that merges b-mc2/sql-create-context and defog data
+
+Only
+
+#### With Prompt Differentiation
+
+```bash
+$ python finetune_1.py ./configs/codellama-v7.json
+```
+
+Apply to:
+
+- `datasets/train_merge_150x5_750_diff_prompt` local dataset that merges b-mc2/sql-create-context and defog data, with unique prompt template incorporated
+- `datasets/train_merge_150x5_750_diff_prompt_gold` local dataset that merges b-mc2/sql-create-context and defog data, with unique prompt template incorporated, with golden `{}` query issue fixed
+
+Only
+
+## Evaluation
+
